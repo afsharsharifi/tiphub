@@ -19,6 +19,10 @@
 ## Tasks
 
 - [x] Fix Template in Django
-- [ ] Schematic Diagram of Database
-- [ ] Custom User Model
+- [x] Schematic Diagram of Database
+- [x] Custom User Model
 - [ ] Others...
+
+<div align=center>
+    <h3>Template By <a href="https://github.com/samanOlia/tip-hub">Saman Olia<h3>
+</div>
