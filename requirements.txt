@@ -1,0 +1,4 @@
+Django==4.1
+django-admin-persian-fonts==0.2
+django-cleanup==6.0.0
+Pillow==9.2.0
