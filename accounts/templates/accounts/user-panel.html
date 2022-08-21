@@ -1,0 +1,42 @@
+{% extends '_layout.html' %}
+{% load static %}
+{% block title %}تیپ هاب - پنل کاربری{% endblock %}
+{% block content %}
+<main>
+    <section class="py-5 my-5">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-sm-9 col-md-8 col-lg-8">
+                    <div class="p-3 custom-bg user-details user-item my-2">
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <p class="">نام و نام خانوادگی:</p>
+                                <h6 class=" font-weight-bold">{{ request.user.fullname }}</h6>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <p class="">پست الکترونیک:</p>
+                                <h6 class=" font-weight-bold">{{ request.user.email }}</h6>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <p class="">شماره تلفن همراه:</p>
+                                <h6 class=" font-weight-bold">{{ request.user.phone }}</h6>
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <p class="">بیوگرافی:</p>
+                                <h6 class=" font-weight-bold">{{ request.user.biography }}</h6>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-center">
+                                    <a class="" href="{% url 'edit_profile' %}">
+                                        <i class="fa fa-edit"></i>
+                                        ویرایش اطلاعات شخصی
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+</main>
+{% endblock %}

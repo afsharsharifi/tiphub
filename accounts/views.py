@@ -7,6 +7,16 @@ from django.contrib.auth import login, authenticate, logout
 # Create your views here.
 
 
+def user_panel_page(request):
+    context = {}
+    return render(request, 'accounts/user-panel.html', context)
+
+
+def edit_user_profile_page(request):
+    context = {}
+    return render(request, 'accounts/edit-user-panel.html', context)
+
+
 def register_page(request):
     register_form = forms.RegisterForm(request.POST or None)
     if register_form.is_valid():
@@ -34,11 +44,16 @@ def login_page(request):
         user = authenticate(request, phone=phone, password=password)
         if user is not None:
             login(request, user)
-            return redirect(reverse('index'))
+            return redirect(reverse('user_panel'))
     context = {
         'login_form': login_form,
     }
     return render(request, 'accounts/login.html', context)
+
+
+def logout_page(request):
+    logout(request)
+    return redirect(reverse('index'))
 
 
 def forgot_password_page(request):

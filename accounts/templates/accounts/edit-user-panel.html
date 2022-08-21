@@ -1,0 +1,52 @@
+{% extends '_layout.html' %}
+{% load static %}
+{% block title %}تیپ هاب - ویرایش پروفایل{% endblock %}
+{% block content %}
+<main>
+    <section class="py-5">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-sm-9 col-md-11 col-lg-10">
+                    <div class="user-panel custom-bg">
+                        <div class="user-panel-box">
+                            <div class="user-panel-profile">
+                                {% if request.user.image %}
+                                <img src="{{ request.user.image.url }}" alt="">
+                                {% else %}
+                                <img src="{% static 'image/sutdent-prof.png' %}" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="change-profile-btn">
+                                <button class="btn custom-btn">تغییر عکس پروفایل</button>
+                            </div>
+                            <!-- item -->
+                            <div class="user-panel-field">
+                                <i class="fa fa-user"></i>
+                                <input class="email-input" type="text" placeholder="نام و نام خانوادگی" value="{{ request.user.fullname }}">
+                            </div>
+                            <!-- item -->
+                            <div class="user-panel-field">
+                                <i class="fa fa-envelope"></i>
+                                <input class="email-input" type="email" placeholder="پست الکترونیک" dir="ltr" value="{{ request.user.email }}">
+                            </div>
+                            <!-- item -->
+                            <div class="user-panel-field">
+                                <i class="fa fa-phone"></i>
+                                <input class="email-input" type="tel" placeholder="شماره تلفن" value="{{ request.user.phone }}">
+                            </div>
+                            <!-- item -->
+                            <div class="user-panel-field">
+                                <i class="fa fa-user-circle"></i>
+                                <input class="" type="text" placeholder="بیوگرافی" value="{{ request.user.biography }}">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3 ">
+                            <button type="submit" class="btn custom-btn w-50">اعمال تغییرات</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
