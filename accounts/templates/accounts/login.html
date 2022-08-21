@@ -12,12 +12,15 @@
                         <form method="post">
                             {% csrf_token %}
                             <div class="field">
-                                <i class="fa fa-envelope"></i>
-                                <input class="email-input" type="email" placeholder="پست الکترونیک" dir="ltr" maxlength="50" required="">
+                                <i class="fa fa-phone"></i>
+                                {{ login_form.phone }}
                             </div>
+                            {% for error in login_form.phone.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
                             <div class="field">
                                 <i class="fa fa-lock"></i>
-                                <input class="password-input" dir="ltr" type="password" placeholder="گذرواژه">
+                                {{ login_form.password }}
                             </div>
                             <div class="mr-1 d-flex justify-content-between">
                                 <div>

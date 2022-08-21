@@ -13,20 +13,32 @@
                             {% csrf_token %}
                             <div class="field">
                                 <i class="fa fa-user"></i>
-                                <input class="email-input" dir="rtl" type="text" placeholder="نام و نام خانوادگی" dir="ltr" maxlength="50" required="">
+                                {{ register_form.fullname }}
                             </div>
+                            {% for error in register_form.fullname.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
                             <div class="field">
                                 <i class="fa fa-phone"></i>
-                                <input class="email-input" type="text" placeholder="شماره تلفن" dir="ltr" maxlength="50" required="">
+                                {{ register_form.phone }}
                             </div>
+                            {% for error in register_form.phone.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
                             <div class="field">
                                 <i class="fa fa-envelope"></i>
-                                <input class="email-input" type="email" placeholder="پست الکترونیک" dir="ltr" maxlength="50" required="">
+                                {{ register_form.email }}
                             </div>
+                            {% for error in register_form.email.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
                             <div class="field">
                                 <i class="fa fa-lock"></i>
-                                <input class="password-input" dir="ltr" type="password" placeholder="گذرواژه">
+                                {{ register_form.password }}
                             </div>
+                            {% for error in register_form.password.errors %}
+                            <p style="color: red;">{{ error }}</p>
+                            {% endfor %}
                             <div class="mr-1">
                                 <div>
                                     <input type="checkbox" class="checkbox-input" tabindex="0">

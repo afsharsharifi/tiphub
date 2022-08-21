@@ -1,14 +1,44 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from . import forms
+from .models import CustomUser
+from django.contrib.auth import login, authenticate, logout
 
 # Create your views here.
 
 
 def register_page(request):
-    return render(request, 'accounts/register.html')
+    register_form = forms.RegisterForm(request.POST or None)
+    if register_form.is_valid():
+        fullname = register_form.cleaned_data.get('fullname')
+        phone = register_form.cleaned_data.get('phone')
+        email = register_form.cleaned_data.get('email')
+        password = register_form.cleaned_data.get('password')
+        CustomUser.objects.create_user(fullname=fullname, email=email, phone=phone, password=password)
+        user = authenticate(request, phone=phone, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect(reverse('index'))
+
+    context = {
+        'register_form': register_form,
+    }
+    return render(request, 'accounts/register.html', context)
 
 
 def login_page(request):
-    return render(request, 'accounts/login.html')
+    login_form = forms.LoginForm(request.POST or None)
+    if login_form.is_valid():
+        phone = login_form.cleaned_data.get('phone')
+        password = login_form.cleaned_data.get('password')
+        user = authenticate(request, phone=phone, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect(reverse('index'))
+    context = {
+        'login_form': login_form,
+    }
+    return render(request, 'accounts/login.html', context)
 
 
 def forgot_password_page(request):
