@@ -1,47 +1,78 @@
 {% extends '_layout.html' %}
 {% load static %}
 {% block title %}تیپ هاب - ویرایش پروفایل{% endblock %}
+{% block header_ref %}
+<style>
+    .profile-image-div {
+        position: relative;
+    }
+
+    .profile-image-div i {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        background-color: rgba(128, 128, 128, 0.3);
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100%;
+        cursor: pointer;
+        font-size: 16pt;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <main>
     <section class="py-5">
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col-sm-9 col-md-11 col-lg-10">
-                    <div class="user-panel custom-bg">
+                    <form method="post" action="{% url 'edit_profile' %}" class="user-panel custom-bg" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <div class="user-panel-box">
                             <div class="user-panel-profile">
-                                {% if request.user.image %}
-                                <img src="{{ request.user.image.url }}" alt="">
-                                {% else %}
-                                <img src="{% static 'image/sutdent-prof.png' %}" alt="">
-                                {% endif %}
+                                <div class="profile-image-div">
+                                    {% if request.user.image %}
+                                    <img src="{{ request.user.image.url }}" alt="">
+                                    {% else %}
+                                    <img src="{% static 'image/sutdent-prof.png' %}" alt="">
+                                    {% endif %}
+                                    <i id="image_change" class="fa fa-camera"></i>
+                                </div>
                             </div>
-                            <div class="change-profile-btn">
-                                <button class="btn custom-btn">تغییر عکس پروفایل</button>
-                            </div>
+                            <input class="d-none" id="select-image" name="profile-image" type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
                             <!-- item -->
                             <div class="user-panel-field">
                                 <i class="fa fa-user"></i>
-                                <input class="email-input" type="text" placeholder="نام و نام خانوادگی" value="{{ request.user.fullname }}">
+                                <input name="fullname" class="email-input" type="text" placeholder="نام و نام خانوادگی" value="{{ request.user.fullname }}">
                             </div>
                             <!-- item -->
                             <div class="user-panel-field">
                                 <i class="fa fa-phone"></i>
-                                <input class="email-input" type="tel" placeholder="شماره تلفن" value="{{ request.user.phone }}">
+                                <input name="phone" class="email-input" type="tel" placeholder="شماره تلفن" value="{{ request.user.phone }}">
                             </div>
                             <!-- item -->
                             <div class="user-panel-field w-100">
                                 <i class="fa fa-envelope"></i>
-                                <input class="email-input" type="email" placeholder="پست الکترونیک" dir="ltr" value="{{ request.user.email }}">
+                                <input name="email" class="email-input" type="email" placeholder="پست الکترونیک" dir="ltr" value="{{ request.user.email }}">
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-3 ">
                             <button type="submit" class="btn custom-btn w-50">اعمال تغییرات</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 </main>
+{% endblock %}
+{% block footer_ref %}
+<script>
+    document.getElementById('image_change').onclick = function() {
+        document.getElementById('select-image').click();
+    };
+</script>
 {% endblock %}

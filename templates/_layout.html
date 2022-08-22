@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% include 'includes/_header_references.html' %}
     <title>{% block title %}{% endblock %}</title>
+    {% block header_ref %}{% endblock %}
 </head>
 
 <body>
@@ -13,6 +14,7 @@
     {% include 'includes/navbar.html' %}
     {% block content %}{% endblock %}
     {% include 'includes/footer.html' %}
+    {% block footer_ref %}{% endblock %}
     {% include 'includes/_footer_references.html' %}
 </body>
 

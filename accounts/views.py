@@ -5,8 +5,6 @@ from .models import CustomUser, Teacher
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import get_object_or_404
 
-from accounts import models
-
 # Create your views here.
 
 
@@ -16,6 +14,17 @@ def user_panel_page(request):
 
 
 def edit_user_profile_page(request):
+    if request.method == "POST":
+        fullname = request.POST.get("fullname")
+        phone = request.POST.get("phone")
+        email = request.POST.get("email")
+        image = request.FILES.get("profile-image")
+
+        user = CustomUser.objects.filter(id=request.user.id)
+        user.update(fullname=fullname, phone=phone, email=email)
+        if image:
+            user.update(image=image)
+        return redirect(reverse('edit_profile'))
     context = {}
     return render(request, 'accounts/edit-user-panel.html', context)
 
