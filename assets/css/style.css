@@ -255,6 +255,7 @@ body {
     height: 40px;
     position: relative;
 }
+
 @media (max-width: 768px) {
     .nav-search-btn {
         width: 91%;
@@ -360,6 +361,7 @@ body {
     color: white;
     background-color: #112031;
 }
+
 .login-btn img {
     width: 40px;
     height: 40px;
@@ -420,17 +422,21 @@ body {
         align-items: flex-start;
         margin: 20px 0px !important;
     }
+
     .nav-menu li {
         width: 90%;
     }
+
     .nav-menu-item-mob {
         display: flex;
         align-items: center;
     }
+
     .nav-menu a {
         display: block;
         margin-bottom: 7px;
     }
+
     .sub-menu-mob {
         background-color: #f1f1f3;
         width: 100% !important;
@@ -440,16 +446,20 @@ body {
         overflow: hidden;
         transition: all 0.3s ease-in-out;
     }
+
     .sub-menu-mob a {
         padding: 5px 10px;
     }
+
     .sub-menu-mob.showsubmenumob {
         max-height: 1000px;
     }
-    .chev-icon{
+
+    .chev-icon {
         transition: all .3s ease-in-out;
     }
-    .rotate-chev{
+
+    .rotate-chev {
         transform: rotate(-90deg);
     }
 
@@ -475,6 +485,7 @@ body {
     right: 50%;
     transform: translate(50%);
 }
+
 .nav-header-box-mob .logo img {
     width: 100px;
     height: 37px;
@@ -524,6 +535,7 @@ body {
 main {
     padding-top: 160px;
 }
+
 @media (max-width: 768px) {
     main {
         padding-top: 80px;
@@ -716,6 +728,7 @@ footer .news form button {
     justify-content: center;
     transition: all 0.3s ease-in-out;
 }
+
 .pagination a:hover {
     color: yellow;
 }
@@ -766,6 +779,7 @@ footer .news form button {
         height: 70px;
     }
 }
+
 @media (max-width: 768px) {
     .video-btn img {
         width: 70px;
@@ -819,6 +833,7 @@ footer .news form button {
     border-radius: 17px;
     object-fit: cover;
 }
+
 .video-overlay {
     position: absolute;
     top: 0px;
@@ -828,6 +843,7 @@ footer .news form button {
     background: linear-gradient(to bottom, rgba(169, 208, 113, 0), rgb(30, 30, 31));
     border-radius: 17px;
 }
+
 /* end video */
 /* video-details */
 .video-title {
@@ -835,12 +851,15 @@ footer .news form button {
     font-size: 25px;
     font-family: "dana-medium";
 }
+
 .view-like span {
     color: #787878;
 }
+
 .view-like i {
     font-size: 18px;
 }
+
 .view-like .liked {
     color: red;
 }
@@ -850,6 +869,7 @@ footer .news form button {
     margin: 0px 6px;
     color: #4878f2;
 }
+
 .comment-area {
     border: 1px solid rgb(207, 205, 205);
     border-radius: 7px;
@@ -862,19 +882,23 @@ footer .news form button {
     height: 35px;
     border-radius: 100%;
 }
+
 .comment {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 2px 4px #e3e1e9;
 }
+
 .comment-date-time {
     color: #787878;
     font-size: 14px;
 }
+
 .comment-text {
     color: #112031;
     font-size: 14px;
 }
+
 .comment-child {
     margin-right: 20px;
 }
@@ -885,16 +909,19 @@ footer .news form button {
     height: 55px;
     border-radius: 100%;
 }
+
 .teacher-description {
     font-size: 14px;
     color: #787878;
     text-align: justify;
 }
+
 .teacher-social-media i {
     font-size: 20px;
     margin: 0px 10px;
     color: #112031;
 }
+
 .teacher-card {
     position: sticky !important;
     top: 160px;
@@ -902,7 +929,7 @@ footer .news form button {
 }
 
 /* login page */
-.field{
+.field {
     position: relative;
     width: 100%;
     text-align: right;
@@ -913,26 +940,31 @@ footer .news form button {
     padding: 0px 10px;
     border-radius: 10px;
 }
-.field i{
+
+.field i {
     color: #787878;
 }
-.field input{
+
+.field input {
     display: flex;
     flex-grow: 1;
     padding: 10px 5px;
-background-color: transparent;
+    background-color: transparent;
 }
-.field input::placeholder{
+
+.field input::placeholder {
     color: #787878;
     text-align: right;
 }
+
 /* social-accunt */
-.social-accunt{
+.social-accunt {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.social-accunt a{
+
+.social-accunt a {
     display: flex;
     flex-grow: 1;
     border: 1px solid rgb(202, 202, 202);
@@ -941,19 +973,23 @@ background-color: transparent;
     margin: 0px 3px;
     transition: all .3s ease-in-out;
 }
-.social-accunt a:hover{
+
+.social-accunt a:hover {
     border: 1px solid rgb(88, 87, 87);
 }
+
 /* about us page */
-.lineh30{
+.lineh30 {
     line-height: 30px;
 }
-.our-team-title{
+
+.our-team-title {
     font-family: 'dana-bold' !important;
     text-align: center;
     margin-bottom: 30px;
 }
-.member{
+
+.member {
     width: 25%;
     margin: 20px 0px;
     display: flex;
@@ -961,22 +997,26 @@ background-color: transparent;
     align-items: center;
     justify-content: center;
 }
-@media (max-width:768px){
-    .member{
+
+@media (max-width:768px) {
+    .member {
         width: 50%;
     }
 }
-.member-img-box{
+
+.member-img-box {
     width: 170px;
     height: 170px;
     position: relative;
 }
-.member img{
+
+.member img {
     width: 170px;
     height: 170px;
     border-radius: 100%;
 }
-.member-overlay{
+
+.member-overlay {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -988,28 +1028,32 @@ background-color: transparent;
     opacity: 1;
     transition: all .1s ease-in-out;
 }
-.member-overlay:hover{
+
+.member-overlay:hover {
     opacity: 0;
 }
-.member p{
+
+.member p {
     margin-top: 10px;
 }
 
 /* user-panel page */
-.user-panel{
+.user-panel {
     border-radius: 10px;
     border: 1px solid rgb(143, 141, 141);
     padding: 50px 20px;
     position: relative;
 }
-.user-panel-box{
+
+.user-panel-box {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
-    
+
 }
-.user-panel-field{
+
+.user-panel-field {
     position: relative;
     width: 49%;
     text-align: right;
@@ -1020,48 +1064,57 @@ background-color: transparent;
     padding: 0px 10px;
     border-radius: 10px;
 }
-@media (max-width:768px){
-    .user-panel-field{
+
+@media (max-width:768px) {
+    .user-panel-field {
         width: 100%;
     }
 }
-.user-panel-field i{
+
+.user-panel-field i {
     color: #787878;
 }
-.user-panel-field input{
+
+.user-panel-field input {
     display: flex;
     flex-grow: 1;
     padding: 10px 5px;
-background-color: transparent;
+    background-color: transparent;
 }
-.user-panel-field input::placeholder{
+
+.user-panel-field input::placeholder {
     color: #787878;
     text-align: right;
     font-size: 15px;
 }
-.user-panel-profile{
+
+.user-panel-profile {
     width: 60px;
     height: 60px;
     border-radius: 100%;
     position: absolute;
     top: -30px;
     right: 60px;
-    
+
 }
+
 .user-panel-profile img {
     width: 60px;
     height: 60px;
     border-radius: 100%;
 }
-.change-profile-btn{
+
+.change-profile-btn {
     position: absolute;
     top: -17px;
     right: 140px;
 }
+
 .user-details p {
     font-size: 13px;
     color: #787878;
 }
+
 .user-details h6 {
     font-size: 14px;
 }

@@ -6,8 +6,88 @@
     <section class="py-5 my-5">
         <div class="container">
             <div class="row d-flex flex-column justify-content-center">
-                <h1>{{ teacher.title }}</h1>
-                <h1>A</h1>
+                <div class="col-12">
+                    <div class="header-teacher d-flex flex-column align-items-center justify-content-center">
+                        {% if teacher.user.image %}
+                        <img class="teacher-image mb-3" src="{{ teacher.user.image.url }}" alt="">
+                        {% else %}
+                        <img class="teacher-image" src="{% static 'image/sutdent-prof.png' %}" alt="">
+                        {% endif %}
+                        <h1>{{ teacher.user.fullname }}</h1>
+                        <p class="bg-info py-2 px-4 rounded text-white text-justify w-400-px text-center">
+                            {{ teacher.about }}
+                        </p>
+                        <div class="d-flex flex-row align-items-center justify-content-center my-3">
+                            {% if teacher.instagram %}
+                            <a class="social-teacher instagram-color" href="https://instagram.com/{{ teacher.instagram }}">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            {% endif %}
+                            {% if teacher.twitter %}
+                            <a class="social-teacher twitter-color" href="https://twitter.com/{{ teacher.twitter }}">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            {% endif %}
+                            {% if teacher.github %}
+                            <a class="social-teacher github-color" href="https://github.com/{{ teacher.github }}">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            {% endif %}
+                            {% if teacher.gitlab %}
+                            <a class="social-teacher gitlab-color" href="https://gitlab.com/{{ teacher.gitlab }}">
+                                <i class="fab fa-gitlab"></i>
+                            </a>
+                            {% endif %}
+                            {% if teacher.linkedin %}
+                            <a class="social-teacher linkedin-color" href="https://www.linkedin.com/in/{{ teacher.linkedin }}">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            {% endif %}
+                            {% if teacher.telegram %}
+                            <a class="social-teacher telegram-color" href="https://t.me/{{ teacher.telegram }}">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                            {% endif %}
+                            {% if teacher.email %}
+                            <a class="social-teacher email-color" href="mailto:{{ teacher.email }}">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                            {% endif %}
+                            {% if teacher.website %}
+                            <a class="social-teacher website-color" href="{{ teacher.website }}">
+                                <i class="fa fa-globe"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if teacher.resume %}
+                            <a class="btn bg-success text-white d-flex align-items-center justify-content-center" href="#">
+                                <span class="mx-1">دانلود رزومه</span>
+                                <i class="fa fa-download mx-1"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-12 col-md-6">
+                                <span>تعداد ویدئوها: </span>
+                                <span class="value-cart-teacher">12</span>
+                                <span><a href="#">(مشاهده)</a></span>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <span>مجموع زمان محتوای تولید شده: </span>
+                                <span class="value-cart-teacher">12 ساعت</span>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <span>مجموع زمان بازدیدها: </span>
+                                <span class="value-cart-teacher">122 ساعت</span>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <span>مجموع تعداد بازدیدها: </span>
+                                <span class="value-cart-teacher">127,458</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
     </section>
 </main>

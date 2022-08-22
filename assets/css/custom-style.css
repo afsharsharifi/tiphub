@@ -1,0 +1,66 @@
+/* My Styles */
+.header-teacher {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.teacher-image {
+    width: 150px !important;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.teacher-title {
+    font-size: 16pt !important;
+    margin-bottom: 10px;
+}
+
+.w-400-px {
+    width: 400px !important;
+}
+
+.social-teacher {
+    margin-left: 10px;
+    color: blue;
+}
+
+.social-teacher i {
+    font-size: 20pt;
+}
+
+.instagram-color {
+    color: #f56040 !important;
+}
+
+.twitter-color {
+    color: #1da1f2 !important;
+}
+
+.github-color {
+    color: #333 !important;
+}
+
+.gitlab-color {
+    color: #fca326 !important;
+}
+
+.linkedin-color {
+    color: #00a0dc !important;
+}
+
+.telegram-color {
+    color: #0088cc !important;
+}
+
+.email-color {
+    color: #ea4335 !important;
+}
+
+.website-color {
+    color: #fbbc05 !important;
+}
+
+.value-cart-teacher {
+    font-weight: bold;
+}
