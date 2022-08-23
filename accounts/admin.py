@@ -11,7 +11,7 @@ class CustomUserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('phone', 'password')}),
         ('اطلاعات شخصی', {'fields': ('fullname', 'email', 'image')}),
-        ('دسترسی ها', {'fields': ('is_admin', 'is_active')}),
+        ('دسترسی ها', {'fields': ('is_admin', 'is_active', 'is_phone_verified', 'is_email_verified')}),
     )
     add_fieldsets = (
         (None, {
