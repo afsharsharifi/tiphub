@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # My Apps
     "home.apps.HomeConfig",
     "accounts.apps.AccountsConfig",
+    "teachers.apps.TeachersConfig",
     # Installed Packages
     "django_cleanup.apps.CleanupConfig",
 ]

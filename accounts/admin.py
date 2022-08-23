@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 
-from .models import CustomUser, Teacher
+from . import models
 
 
 class CustomUserAdmin(BaseUserAdmin):
@@ -24,17 +24,5 @@ class CustomUserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
-class TeacherAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'username')
-    fieldsets = (
-        (None, {'fields': ('user', 'username')}),
-        ('اطلاعات شخصی', {'fields': ('title', 'about')}),
-        ('شبکه های اجتماعی', {'fields': ('instagram', 'twitter', 'github', 'gitlab', 'linkedin', 'telegram', 'email', 'website')}),
-        ('فایل رزومه', {'fields': ('resume',)}),
-    )
-    search_fields = ('user', 'username', 'email')
-
-
-admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(Teacher, TeacherAdmin)
+admin.site.register(models.CustomUser, CustomUserAdmin)
 admin.site.unregister(Group)

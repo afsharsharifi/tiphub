@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from . import forms
-from .models import CustomUser, Teacher
+from .models import CustomUser
 from django.contrib.auth import login, authenticate, logout
-from django.shortcuts import get_object_or_404
 
 # Create your views here.
+
+
+def phone_verifaction_page(request):
+    context = {}
+    return render(request, 'accounts/phone-verifaction.html', context)
 
 
 def user_panel_page(request):
@@ -66,14 +70,6 @@ def login_page(request):
 def logout_page(request):
     logout(request)
     return redirect(reverse('index'))
-
-
-def teacher_profile_page(request, username):
-    teacher = get_object_or_404(Teacher, username=username)
-    context = {
-        'teacher': teacher,
-    }
-    return render(request, 'accounts/teacher-profile.html', context)
 
 
 def forgot_password_page(request):
