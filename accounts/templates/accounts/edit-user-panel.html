@@ -52,21 +52,11 @@
                             <div class="user-panel-field">
                                 <i class="fa fa-phone"></i>
                                 <input name="phone" class="email-input" type="tel" placeholder="شماره تلفن" value="{{ request.user.phone }}">
-                                {% if request.user.is_phone_verified %}
-                                <span class="text-success">تایید شده</span>
-                                {% else %}
-                                <span class="text-danger">تایید نشده</span>
-                                {% endif %}
                             </div>
                             <!-- item -->
                             <div class="user-panel-field w-100">
                                 <i class="fa fa-envelope"></i>
                                 <input name="email" class="email-input" type="email" placeholder="پست الکترونیک" dir="ltr" value="{{ request.user.email }}">
-                                {% if request.user.is_email_verified %}
-                                <span class="text-success">تایید شده</span>
-                                {% else %}
-                                <span class="text-danger">تایید نشده</span>
-                                {% endif %}
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-3 ">

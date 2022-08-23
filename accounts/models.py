@@ -14,7 +14,7 @@ def create_image_path_user(instance, filename):
 class CustomUser(AbstractBaseUser):
     fullname = models.CharField(max_length=150, verbose_name="نام و نام خانوادگی")
     phone = models.CharField(max_length=11, unique=True, verbose_name="شماره تلفن")
-    otp_code = models.CharField(max_length=6, null=True, verbose_name="کد یکبار مصرف")
+    otp_code = models.CharField(max_length=6, null=True, verbose_name="کد یکبار مصرف", editable=False)
     is_phone_verified = models.BooleanField(default=False, verbose_name="تلفن تایید شده")
     email = models.EmailField(max_length=255, unique=True, verbose_name="ایمیل")
     is_email_verified = models.BooleanField(default=False, verbose_name="ایمیل تایید شده")

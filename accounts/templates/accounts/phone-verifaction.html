@@ -3,12 +3,24 @@
 {% block title %}تیپ هاب - تایید شماره تلفن{% endblock %}
 {% block content %}
 <main>
+    <div style="margin: 150px;"></div>
     <section class="py-5">
         <div class="container">
             <div class="d-flex flex-column justify-content-center">
-                <input type="text">
+                <h3 class="text-center mb-4">شماره خود را تایید کنید</h3>
+                <form method="post" class="form-number">
+                    <div>
+                        <input type="text" maxlength="11" placeholder="شماره تلفن" value="{{ request.user.phone }}">
+                        <button>ارسال کد تایید</button>
+                    </div>
+                    <div>
+                        <input type="text" maxlength="6" placeholder="کد ۶ رقمی ارسال شده">
+                        <button type="submit">ثبت</button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
+    <div style="margin: 150px;"></div>
 </main>
 {% endblock %}

@@ -6,7 +6,7 @@ from . import models
 
 
 class CustomUserAdmin(BaseUserAdmin):
-    list_display = ('fullname', 'phone', 'email', 'is_active', 'is_admin')
+    list_display = ('fullname', 'phone', 'email', 'is_active', 'is_admin', 'otp_code')
     list_filter = ('is_admin', 'is_active')
     fieldsets = (
         (None, {'fields': ('phone', 'password')}),

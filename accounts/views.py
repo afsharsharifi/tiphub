@@ -1,36 +1,11 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect, render
 from django.urls import reverse
+
 from . import forms
 from .models import CustomUser
-from django.contrib.auth import login, authenticate, logout
 
 # Create your views here.
-
-
-def phone_verifaction_page(request):
-    context = {}
-    return render(request, 'accounts/phone-verifaction.html', context)
-
-
-def user_panel_page(request):
-    context = {}
-    return render(request, 'accounts/user-panel.html', context)
-
-
-def edit_user_profile_page(request):
-    if request.method == "POST":
-        fullname = request.POST.get("fullname")
-        phone = request.POST.get("phone")
-        email = request.POST.get("email")
-        image = request.FILES.get("profile-image")
-
-        user = CustomUser.objects.filter(id=request.user.id)
-        user.update(fullname=fullname, phone=phone, email=email)
-        if image:
-            user.update(image=image)
-        return redirect(reverse('edit_profile'))
-    context = {}
-    return render(request, 'accounts/edit-user-panel.html', context)
 
 
 def register_page(request):
@@ -65,6 +40,32 @@ def login_page(request):
         'login_form': login_form,
     }
     return render(request, 'accounts/login.html', context)
+
+
+def phone_verifaction_page(request):
+    context = {}
+    return render(request, 'accounts/phone-verifaction.html', context)
+
+
+def user_panel_page(request):
+    context = {}
+    return render(request, 'accounts/user-panel.html', context)
+
+
+def edit_user_profile_page(request):
+    if request.method == "POST":
+        fullname = request.POST.get("fullname")
+        phone = request.POST.get("phone")
+        email = request.POST.get("email")
+        image = request.FILES.get("profile-image")
+
+        user = CustomUser.objects.filter(id=request.user.id)
+        user.update(fullname=fullname, phone=phone, email=email)
+        if image:
+            user.update(image=image)
+        return redirect(reverse('edit_profile'))
+    context = {}
+    return render(request, 'accounts/edit-user-panel.html', context)
 
 
 def logout_page(request):

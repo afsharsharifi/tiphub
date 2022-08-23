@@ -23,6 +23,7 @@ class RegisterForm(forms.Form):
                 'placeholder': 'شماره تلفن',
                 'class': 'email-input',
                 'dir': 'ltr',
+                'maxlength': '11',
             }
         ),
         label='شماره تلفن',
@@ -82,6 +83,7 @@ class LoginForm(forms.Form):
                 'placeholder': 'شماره تلفن',
                 'class': 'email-input',
                 'dir': 'ltr',
+                'maxlength': '11',
             }
         ),
         label='شماره تلفن',

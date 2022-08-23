@@ -17,18 +17,18 @@
                                 <p class="">شماره تلفن همراه:</p>
                                 <h6 class=" font-weight-bold">{{ request.user.phone }}</h6>
                                 {% if request.user.is_phone_verified %}
-                                <span class="text-success">تایید شده</span>
+                                <a href="#" class="btn bg-success text-white disabled">تایید شده</a>
                                 {% else %}
-                                <span class="text-danger">تایید نشده</span>
+                                <a href="#" class="btn bg-primary text-white">تایید کردن</a>
                                 {% endif %}
                             </div>
                             <div class="col-lg-12 mb-4">
                                 <p class="">پست الکترونیک:</p>
                                 <h6 class=" font-weight-bold">{{ request.user.email }}</h6>
                                 {% if request.user.is_email_verified %}
-                                <span class="text-success">تایید شده</span>
+                                <a href="#" class="btn bg-success text-white disabled">تایید شده</a>
                                 {% else %}
-                                <span class="text-danger">تایید نشده</span>
+                                <a href="#" class="btn bg-primary text-white">تایید کردن</a>
                                 {% endif %}
                             </div>
                             <div class="col-12">
