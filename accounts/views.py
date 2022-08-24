@@ -1,9 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
+from django.http import JsonResponse
 from django.urls import reverse
 
 from . import forms
 from .models import CustomUser
+from extensions.utils import generate_otp
 
 # Create your views here.
 
@@ -19,7 +21,7 @@ def register_page(request):
         user = authenticate(request, phone=phone, password=password)
         if user is not None:
             login(request, user)
-            return redirect(reverse('index'))
+            return redirect(reverse('phone_verifaction'))
 
     context = {
         'register_form': register_form,
@@ -43,8 +45,37 @@ def login_page(request):
 
 
 def phone_verifaction_page(request):
-    context = {}
+    if request.method == "POST":
+        user = CustomUser.objects.get(id=request.user.id)
+        phone = request.POST.get("phone")
+        otp_code = request.POST.get("otp_code")
+        if user.phone == phone and user.otp_code == otp_code:
+            user.is_phone_verified = True
+            user.save()
+            return redirect(reverse('user_panel'))
+        user.is_phone_verified = False
+        user.save()
+        return render(request, 'accounts/phone-verifaction.html', {"is_phone_verify": False})
+    context = {
+        "is_phone_verify": True
+    }
     return render(request, 'accounts/phone-verifaction.html', context)
+
+
+def send_otp_code(request):
+    if request.method == "POST":
+        OTP_CODE = generate_otp()
+        user = CustomUser.objects.get(id=request.user.id)
+        phone = request.POST.get("phone")
+        user.phone = phone
+        user.otp_code = OTP_CODE
+        user.save()
+        print(f"OTP Code for {phone} is =>>>>> {OTP_CODE}")
+        context = {
+            'message': 'Code has been send',
+            'status': 200
+        }
+        return JsonResponse(context)
 
 
 def user_panel_page(request):

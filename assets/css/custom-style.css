@@ -89,3 +89,9 @@
     color: #0088cc;
     border: 2px solid #0088cc !important;
 }
+
+.form-number button:disabled,
+.form-number button[disabled] {
+    color: gray !important;
+    border: 2px solid gray !important;
+}

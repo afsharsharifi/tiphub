@@ -4,17 +4,23 @@
 {% block content %}
 <main>
     <div style="margin: 150px;"></div>
+    {% if not is_phone_verify %}
+    <div class="container alert alert-danger" role="alert">
+        کد تایید اشتباه است
+    </div>
+    {% endif %}
     <section class="py-5">
         <div class="container">
             <div class="d-flex flex-column justify-content-center">
-                <h3 class="text-center mb-4">شماره خود را تایید کنید</h3>
+                <h3 class="text-center mb-4">لطفا شماره خود را تایید کنید</h3>
                 <form method="post" class="form-number">
+                    {% csrf_token %}
                     <div>
-                        <input type="text" maxlength="11" placeholder="شماره تلفن" value="{{ request.user.phone }}">
-                        <button>ارسال کد تایید</button>
+                        <input id="phone-number" name="phone" type="text" maxlength="11" placeholder="شماره تلفن" value="{{ request.user.phone }}">
+                        <button id="send-verifaction-code">ارسال کد تایید</button>
                     </div>
-                    <div>
-                        <input type="text" maxlength="6" placeholder="کد ۶ رقمی ارسال شده">
+                    <div id="code-section" class="d-none">
+                        <input type="text" name="otp_code" maxlength="6" placeholder="کد ۶ رقمی ارسال شده">
                         <button type="submit">ثبت</button>
                     </div>
                 </form>
@@ -23,4 +29,30 @@
     </section>
     <div style="margin: 150px;"></div>
 </main>
+{% endblock %}
+{% block footer_ref %}
+<script>
+    $(document).ready(function() {
+        $("#send-verifaction-code").click(function(event) {
+            event.preventDefault();
+            $("#send-verifaction-code").prop("disabled", true)
+            $("#code-section").removeClass("d-none");
+            $.ajax({
+                url: 'http://127.0.0.1:8000/user/phone-verifaction/send-otp',
+                type: 'post',
+                data: {
+                    phone: $("#phone-number").val(),
+                    csrfmiddlewaretoken: "{{ csrf_token  }}",
+                    state: "inactive"
+                },
+                success: function(data) {
+                    console.log(data.status, data.message);
+                },
+                failure: function(data) {
+                    alert('Got an error for sending code');
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
