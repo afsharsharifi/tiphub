@@ -1,5 +1,6 @@
 {% extends '_layout.html' %}
 {% load static %}
+{% load socialaccount %}
 {% block title %}تیپ هاب - ورود{% endblock %}
 {% block content %}
 <main>
@@ -15,18 +16,18 @@
                                 <i class="fa fa-phone"></i>
                                 {{ login_form.phone }}
                             </div>
+                            <p class="d-none text-danger" id="digit-error">شماره تلفن نمیتواند شامل حروف باشد</p>
                             {% for error in login_form.phone.errors %}
-                            <p style="color: red;">{{ error }}</p>
+                            <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                             <div class="field">
                                 <i class="fa fa-lock"></i>
                                 {{ login_form.password }}
+                                <button id="password-visibility">
+                                    <i id="eye-icon" class="fa fa-eye"></i>
+                                </button>
                             </div>
                             <div class="mr-1 d-flex justify-content-between">
-                                <div>
-                                    <input type="checkbox" class="checkbox-input" tabindex="0">
-                                    <label class="small">نمایش گذرواژه</label>
-                                </div>
                                 <div>
                                     <a href="{% url 'forgot_password' %}" class="small">رمز عبور خود را فراموش کرده اید؟</a>
                                 </div>
@@ -60,4 +61,33 @@
         </div>
     </section>
 </main>
+{% endblock %}
+
+{% block footer_ref %}
+<script>
+    document.getElementById("id_phone").addEventListener("keyup", function() {
+        if (isNaN(document.getElementById("id_phone").value)) {
+            document.getElementById("digit-error").classList.remove("d-none")
+            document.getElementById("digit-error").classList.add("d-block")
+        } else {
+            document.getElementById("digit-error").classList.remove("d-block")
+            document.getElementById("digit-error").classList.add("d-none")
+        }
+    })
+</script>
+
+<script>
+    document.getElementById("password-visibility").addEventListener("click", function(e) {
+        e.preventDefault()
+        let password = document.getElementById("id_password");
+        let icon = document.getElementById("eye-icon");
+        if (password.type === "password") {
+            password.type = "text";
+            icon.classList = "fas fa-eye-slash"
+        } else {
+            password.type = "password";
+            icon.classList = "fa fa-eye"
+        }
+    });
+</script>
 {% endblock %}

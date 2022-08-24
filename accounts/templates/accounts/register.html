@@ -17,29 +17,33 @@
                                 {{ register_form.fullname }}
                             </div>
                             {% for error in register_form.fullname.errors %}
-                            <p style="color: red;">{{ error }}</p>
+                            <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                             <div class="field">
                                 <i class="fa fa-phone"></i>
                                 {{ register_form.phone }}
                             </div>
+                            <p class="d-none text-danger" id="digit-error">شماره تلفن نمیتواند شامل حروف باشد</p>
                             {% for error in register_form.phone.errors %}
-                            <p style="color: red;">{{ error }}</p>
+                            <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                             <div class="field">
                                 <i class="fa fa-envelope"></i>
                                 {{ register_form.email }}
                             </div>
+                            <p class="d-none text-danger" id="email-error">ایمیل وارد شده معتبر نیست</p>
                             {% for error in register_form.email.errors %}
-                            <p style="color: red;">{{ error }}</p>
+                            <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                             <div class="field">
                                 <i class="fa fa-lock"></i>
                                 {{ register_form.password }}
-                                <button><i class="fa fa-eye"></i></button>
+                                <button id="password-visibility">
+                                    <i id="eye-icon" class="fa fa-eye"></i>
+                                </button>
                             </div>
                             {% for error in register_form.password.errors %}
-                            <p style="color: red;">{{ error }}</p>
+                            <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                             <div class="my-3">
                                 <button class="btn custom-btn w-100">عضویت</button>
@@ -70,4 +74,51 @@
         </div>
     </section>
 </main>
+{% endblock %}
+
+{% block footer_ref %}
+<script>
+    document.getElementById("id_phone").addEventListener("keyup", function() {
+        if (isNaN(document.getElementById("id_phone").value)) {
+            document.getElementById("digit-error").classList.remove("d-none")
+            document.getElementById("digit-error").classList.add("d-block")
+        } else {
+            document.getElementById("digit-error").classList.remove("d-block")
+            document.getElementById("digit-error").classList.add("d-none")
+        }
+    })
+</script>
+<script>
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+    document.getElementById("id_email").addEventListener("keyup", function(e) {
+        e.preventDefault()
+        if (!validateEmail(document.getElementById("id_email").value)) {
+            document.getElementById("email-error").classList.remove("d-none")
+            document.getElementById("email-error").classList.add("d-block")
+        } else {
+            document.getElementById("email-error").classList.remove("d-block")
+            document.getElementById("email-error").classList.add("d-none")
+        }
+    })
+</script>
+<script>
+    document.getElementById("password-visibility").addEventListener("click", function(e) {
+        e.preventDefault()
+        let password = document.getElementById("id_password");
+        let icon = document.getElementById("eye-icon");
+        if (password.type === "password") {
+            password.type = "text";
+            icon.classList = "fas fa-eye-slash"
+        } else {
+            password.type = "password";
+            icon.classList = "fa fa-eye"
+        }
+    });
+</script>
 {% endblock %}

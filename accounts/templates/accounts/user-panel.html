@@ -10,20 +10,20 @@
                     <div class="p-3 custom-bg user-details user-item my-2">
                         <div class="row">
                             <div class="col-lg-6 mb-4">
-                                <p class="">نام و نام خانوادگی:</p>
+                                <p>نام و نام خانوادگی:</p>
                                 <h6 class=" font-weight-bold">{{ request.user.fullname }}</h6>
                             </div>
                             <div class="col-lg-6 mb-4">
-                                <p class="">شماره تلفن همراه:</p>
+                                <p>شماره تلفن همراه:</p>
                                 <h6 class=" font-weight-bold">{{ request.user.phone }}</h6>
                                 {% if request.user.is_phone_verified %}
                                 <a href="#" class="btn bg-success text-white disabled">تایید شده</a>
                                 {% else %}
-                                <a href="#" class="btn bg-primary text-white">تایید کردن</a>
+                                <a href="{% url 'phone_verifaction' %}" class="btn bg-primary text-white">تایید کردن</a>
                                 {% endif %}
                             </div>
                             <div class="col-lg-12 mb-4">
-                                <p class="">پست الکترونیک:</p>
+                                <p>پست الکترونیک:</p>
                                 <h6 class=" font-weight-bold">{{ request.user.email }}</h6>
                                 {% if request.user.is_email_verified %}
                                 <a href="#" class="btn bg-success text-white disabled">تایید شده</a>
@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="text-center">
-                                    <a class="" href="{% url 'edit_profile' %}">
+                                    <a href="{% url 'edit_profile' %}">
                                         <i class="fa fa-edit"></i>
                                         ویرایش اطلاعات شخصی
                                     </a>

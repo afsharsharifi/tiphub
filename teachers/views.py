@@ -9,4 +9,4 @@ def teacher_profile_page(request, username):
     context = {
         'teacher': teacher,
     }
-    return render(request, 'accounts/teacher-profile.html', context)
+    return render(request, 'teachers/teacher-profile.html', context)

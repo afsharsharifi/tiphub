@@ -1,16 +1,21 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import redirect, render
-from django.http import JsonResponse
 from django.urls import reverse
+from extensions.utils import generate_otp
 
 from . import forms
 from .models import CustomUser
-from extensions.utils import generate_otp
 
 # Create your views here.
 
 
 def register_page(request):
+    if request.user.is_authenticated:
+        if request.user.is_phone_verified:
+            return redirect(reverse('user_panel'))
+        return redirect(reverse('phone_verifaction'))
     register_form = forms.RegisterForm(request.POST or None)
     if register_form.is_valid():
         fullname = register_form.cleaned_data.get('fullname')
@@ -30,6 +35,10 @@ def register_page(request):
 
 
 def login_page(request):
+    if request.user.is_authenticated:
+        if request.user.is_phone_verified:
+            return redirect(reverse('user_panel'))
+        return redirect(reverse('phone_verifaction'))
     login_form = forms.LoginForm(request.POST or None)
     if login_form.is_valid():
         phone = login_form.cleaned_data.get('phone')
@@ -44,7 +53,10 @@ def login_page(request):
     return render(request, 'accounts/login.html', context)
 
 
+@login_required
 def phone_verifaction_page(request):
+    if request.user.is_phone_verified:
+        return redirect(reverse("user_panel"))
     if request.method == "POST":
         user = CustomUser.objects.get(id=request.user.id)
         phone = request.POST.get("phone")
@@ -62,6 +74,7 @@ def phone_verifaction_page(request):
     return render(request, 'accounts/phone-verifaction.html', context)
 
 
+@login_required
 def send_otp_code(request):
     if request.method == "POST":
         OTP_CODE = generate_otp()
@@ -78,12 +91,18 @@ def send_otp_code(request):
         return JsonResponse(context)
 
 
+@login_required
 def user_panel_page(request):
+    if not request.user.is_phone_verified:
+        return redirect(reverse('phone_verifaction'))
     context = {}
     return render(request, 'accounts/user-panel.html', context)
 
 
+@login_required
 def edit_user_profile_page(request):
+    if not request.user.is_phone_verified:
+        return redirect(reverse('phone_verifaction'))
     if request.method == "POST":
         fullname = request.POST.get("fullname")
         phone = request.POST.get("phone")
@@ -99,12 +118,20 @@ def edit_user_profile_page(request):
     return render(request, 'accounts/edit-user-panel.html', context)
 
 
+@login_required
 def logout_page(request):
     logout(request)
     return redirect(reverse('index'))
 
 
 def forgot_password_page(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        user = CustomUser.objects.filter(email=email.lower()).first()
+        if not user:
+            return render(request, 'accounts/forgot-password.html', {"email_not_exists": True})
+
+        return render(request, 'accounts/forgot-password.html', {"email_send": True})
     return render(request, 'accounts/forgot-password.html')
 
 
