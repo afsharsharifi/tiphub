@@ -1,4 +1,3 @@
-import os
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from extensions.utils import get_extension_file, username_from_email

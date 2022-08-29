@@ -109,11 +109,12 @@ def edit_user_profile_page(request):
         email = request.POST.get("email")
         image = request.FILES.get("profile-image")
         print(image)
-
-        user = CustomUser.objects.filter(id=request.user.id)
-        user.update(fullname=fullname, phone=phone, email=email)
-        if image:
-            user.update(image=image)
+        obj, created = CustomUser.objects.update_or_create(id=request.user.id, defaults={
+            'fullname': fullname,
+            'phone': phone,
+            'email': email,
+            'image': image,
+        },)
         return redirect(reverse('edit_profile'))
     context = {}
     return render(request, 'accounts/edit-user-panel.html', context)
