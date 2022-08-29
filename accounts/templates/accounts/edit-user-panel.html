@@ -35,9 +35,9 @@
                             <div class="user-panel-profile">
                                 <div class="profile-image-div">
                                     {% if request.user.image %}
-                                    <img src="{{ request.user.image.url }}" alt="">
+                                    <img id="preview-image" src="{{ request.user.image.url }}" alt="">
                                     {% else %}
-                                    <img src="{% static 'image/sutdent-prof.png' %}" alt="">
+                                    <img id="preview-image" src="{% static 'image/sutdent-prof.png' %}" alt="">
                                     {% endif %}
                                     <i id="image_change" class="fa fa-camera"></i>
                                 </div>
@@ -60,7 +60,8 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-3 ">
-                            <button type="submit" class="btn custom-btn w-50">اعمال تغییرات</button>
+                            <!-- <button type="submit" class="btn custom-btn w-50">اعمال تغییرات</button> -->
+                            <input class="btn custom-btn w-50" type="submit" value="اعمال تغییرات">
                         </div>
                     </form>
                 </div>
@@ -74,5 +75,18 @@
     document.getElementById('image_change').onclick = function() {
         document.getElementById('select-image').click();
     };
+
+    document.getElementById("select-image").addEventListener("change", function() {
+        imgPreview = document.getElementById('preview-image')
+        const files = document.getElementById('select-image').files[0];
+        if (files) {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(files);
+            fileReader.addEventListener("load", function() {
+                imgPreview.style.display = "block";
+                imgPreview.src = this.result
+            });
+        }
+    })
 </script>
 {% endblock %}

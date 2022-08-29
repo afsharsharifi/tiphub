@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from extensions.utils import generate_otp
@@ -108,6 +108,7 @@ def edit_user_profile_page(request):
         phone = request.POST.get("phone")
         email = request.POST.get("email")
         image = request.FILES.get("profile-image")
+        print(image)
 
         user = CustomUser.objects.filter(id=request.user.id)
         user.update(fullname=fullname, phone=phone, email=email)
@@ -130,7 +131,6 @@ def forgot_password_page(request):
         user = CustomUser.objects.filter(email=email.lower()).first()
         if not user:
             return render(request, 'accounts/forgot-password.html', {"email_not_exists": True})
-
         return render(request, 'accounts/forgot-password.html', {"email_send": True})
     return render(request, 'accounts/forgot-password.html')
 
