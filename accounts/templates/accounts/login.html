@@ -46,12 +46,18 @@
                             <p class="small text-center my-3">ورود از طریق حساب‌های کاربری دیگر</p>
                             <div class="">
                                 <div class="social-accunt">
-                                    <a title="Google" class="" href="{% provider_login_url 'google' %}">
-                                        <img height="24" src="{% static 'image/google.svg' %}" class="d-block m-auto">
-                                    </a>
-                                    <a title="GitHub" class="" href="{% provider_login_url 'github' %}">
-                                        <img height="24" src="{% static 'image/github.svg' %}" class="d-block m-auto">
-                                    </a>
+                                    <form action="{% provider_login_url 'google' %}" method="post" class="w-50 d-flex justify-content-center">
+                                        {% csrf_token %}
+                                        <button type="submit" class="w-100 border py-2 px-4">
+                                            <img height="24" src="{% static 'image/google.svg' %}" class="d-block m-auto">
+                                        </button>
+                                    </form>
+                                    <form action="{% provider_login_url 'github' %}" method="post" class="w-50 d-flex justify-content-center">
+                                        {% csrf_token %}
+                                        <button type="submit" class="w-100 border py-2 px-4">
+                                            <img height="24" src="{% static 'image/github.svg' %}" class="d-block m-auto">
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
