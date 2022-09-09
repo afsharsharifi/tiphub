@@ -23,13 +23,13 @@
                             <div class="field">
                                 <i class="fa fa-lock"></i>
                                 {{ login_form.password }}
-                                <button id="password-visibility">
+                                <button type="button" id="password-visibility">
                                     <i id="eye-icon" class="fa fa-eye"></i>
                                 </button>
                             </div>
                             <div class="mr-1 d-flex justify-content-between">
                                 <div>
-                                    <a href="{% url 'forgot_password' %}" class="small">رمز عبور خود را فراموش کرده اید؟</a>
+                                    <a href="{% url 'accounts:forgot_password' %}" class="small">رمز عبور خود را فراموش کرده اید؟</a>
                                 </div>
                             </div>
                             <div class="my-3">
@@ -37,7 +37,7 @@
                             </div>
                             <div class="pb-2 border-bottom">
                                 <span class="small">حساب کاربری ندارید؟</span>
-                                <a href="{% url 'register' %}" class="small">
+                                <a href="{% url 'accounts:register' %}" class="small">
                                     عضویت در سایت
                                 </a>
                             </div>

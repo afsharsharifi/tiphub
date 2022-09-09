@@ -29,7 +29,7 @@
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col-sm-9 col-md-11 col-lg-10">
-                    <form method="post" action="{% url 'edit_profile' %}" class="user-panel custom-bg" enctype="multipart/form-data">
+                    <form method="post" action="{% url 'accounts:edit_profile' %}" class="user-panel custom-bg" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="user-panel-box">
                             <div class="user-panel-profile">

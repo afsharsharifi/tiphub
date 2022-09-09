@@ -19,7 +19,7 @@
                                 {% if request.user.is_phone_verified %}
                                 <a href="#" class="btn bg-success text-white disabled">تایید شده</a>
                                 {% else %}
-                                <a href="{% url 'phone_verifaction' %}" class="btn bg-primary text-white">تایید کردن</a>
+                                <a href="{% url 'accounts:phone_verifaction' %}" class="btn bg-primary text-white">تایید کردن</a>
                                 {% endif %}
                             </div>
                             <div class="col-lg-12 mb-4">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="text-center">
-                                    <a href="{% url 'edit_profile' %}">
+                                    <a href="{% url 'accounts:edit_profile' %}">
                                         <i class="fa fa-edit"></i>
                                         ویرایش اطلاعات شخصی
                                     </a>

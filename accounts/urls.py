@@ -2,6 +2,9 @@ from django.urls import path
 
 from . import views
 
+
+app_name = "accounts"
+
 urlpatterns = [
     path('', views.user_panel_page, name="user_panel"),
     path('edit', views.edit_user_profile_page, name="edit_profile"),
