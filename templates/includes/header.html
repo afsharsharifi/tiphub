@@ -37,11 +37,11 @@
                             {% endif %}
                         </a>
                         <div class="dropdown-menu account-menu-items custom-bg" aria-labelledby="dropdownMenuButton">
-                            <a href="{% url 'accounts:user_panel' %}">
+                            <a href="{% url 'user_panel' %}">
                                 <i class=" fa fa-account"></i>
                                 <span>پروفایل</span>
                             </a>
-                            <a href="{% url 'accounts:logout' %}">خروج</a>
+                            <a href="{% url 'logout' %}">خروج</a>
                         </div>
                     </div>
                 </div>
@@ -55,11 +55,11 @@
                             <span>حساب کاربری </span>
                         </a>
                         <div class="dropdown-menu account-menu-items custom-bg" aria-labelledby="dropdownMenuButton">
-                            <a href="{% url 'accounts:login' %}">
+                            <a href="{% url ':login' %}">
                                 <i class=" fa fa-account"></i>
                                 <span>ورود</span>
                             </a>
-                            <a href="{% url 'accounts:register' %}"> ثبت نام</a>
+                            <a href="{% url 'register' %}"> ثبت نام</a>
                         </div>
                     </div>
                 </div>
@@ -149,11 +149,11 @@
                             <img src="{% static 'image/sutdent-prof.png' %}" alt="">
                         </a>
                         <div class="dropdown-menu account-menu-items custom-bg" aria-labelledby="dropdownMenuButton">
-                            <a href="{% url 'accounts:user_panel' %}">
+                            <a href="{% url 'user_panel' %}">
                                 <i class=" fa fa-account"></i>
                                 <span>پروفایل</span>
                             </a>
-                            <a href="{% url 'accounts:logout' %}">خروج</a>
+                            <a href="{% url 'logout' %}">خروج</a>
                         </div>
                     </div>
                 </div>
@@ -169,10 +169,10 @@
                             ورود
                         </a>
                         <div class="dropdown-menu account-menu-items custom-bg" aria-labelledby="dropdownMenuButton">
-                            <a href="{% url 'accounts:login' %}"> <i class=" fa fa-account"></i>
+                            <a href="{% url 'login' %}"> <i class=" fa fa-account"></i>
                                 <span>ورود</span>
                             </a>
-                            <a href="{% url 'accounts:register' %}"> ثبت نام</a>
+                            <a href="{% url 'register' %}"> ثبت نام</a>
                         </div>
                     </div>
                 </div>

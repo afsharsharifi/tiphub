@@ -38,7 +38,7 @@
             $("#send-verifaction-code").prop("disabled", true)
             $("#code-section").removeClass("d-none");
             $.ajax({
-                url: 'http://127.0.0.1:8000/user/phone-verifaction/send-otp',
+                url: '{% url "send_otp_code" %}',
                 type: 'post',
                 data: {
                     phone: $("#phone-number").val(),

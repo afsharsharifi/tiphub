@@ -129,6 +129,10 @@ AUTHENTICATION_BACKENDS = [
 # ]
 
 
+# Email Service
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 

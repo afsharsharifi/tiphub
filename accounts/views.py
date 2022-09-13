@@ -17,7 +17,7 @@ from .models import CustomUser
 class RegisterView(FormView):
     template_name = 'accounts/register.html'
     form_class = forms.RegisterForm
-    success_url = reverse_lazy("accounts:login")
+    success_url = reverse_lazy("login")
 
     def form_valid(self, form):
         form_data = form.cleaned_data
@@ -28,7 +28,7 @@ class RegisterView(FormView):
         if self.request.user.is_authenticated:
             if self.request.user.is_phone_verified:
                 return redirect('home:index')
-            return redirect('accounts:phone_verifaction')
+            return redirect('phone_verifaction')
         return super().get(request, *args, **kwargs)
 
 
@@ -42,14 +42,14 @@ class LoginView(FormView):
         user = authenticate(self.request, phone=form_data["phone"], password=form_data["password"])
         if user is not None:
             login(self.request, user)
-            return redirect("accounts:user_panel")
+            return redirect("user_panel")
         return super().form_valid(form)
 
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
             if self.request.user.is_phone_verified:
                 return redirect('home:index')
-            return redirect('accounts:phone_verifaction')
+            return redirect('phone_verifaction')
         return super().get(request, *args, **kwargs)
 
 
@@ -74,7 +74,7 @@ class PhoneVerifactionView(LoginRequiredMixin, View):
         if user.phone == phone and user.otp_code == otp_code:
             user.is_phone_verified = True
             user.save()
-            return redirect('accounts:user_panel')
+            return redirect('user_panel')
         user.is_phone_verified = False
         user.save()
         return render(request, self.template_name, {"is_phone_verify": False})
@@ -101,7 +101,7 @@ class UserPanelView(View):
 
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_phone_verified:
-            return redirect('accounts:phone_verifaction')
+            return redirect('phone_verifaction')
         return render(request, self.template_name)
 
 
@@ -110,7 +110,7 @@ class EditUserProfileView(View):
 
     def get(self, request, *args, **kwargs):
         if not self.request.user.is_phone_verified:
-            return redirect('accounts:phone_verifaction')
+            return redirect('phone_verifaction')
         form = forms.EditUserProfileForm(instance=request.user)
         return render(request, 'accounts/edit-user-panel.html', {'form': form})
 
@@ -123,12 +123,13 @@ class EditUserProfileView(View):
             if "email" in form.changed_data:
                 instance.is_email_verified = False
             instance.save()
-            return redirect("accounts:edit_profile")
+            return redirect("edit_profile")
         return render(request, self.template_name)
 
 
 class PasswordChangeView(auth_views.PasswordChangeView):
     template_name = "accounts/password_change_form.html"
+    success_url = reverse_lazy("password_change_done")
 
 
 class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
@@ -137,17 +138,17 @@ class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
 
 class PasswordResetView(auth_views.PasswordResetView):
     template_name = "accounts/password_reset_form.html"
+    success_url = reverse_lazy("password_reset_done")
 
 
-def forgot_password_page(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
-        user = CustomUser.objects.filter(email=email.lower()).first()
-        if not user:
-            return render(request, 'accounts/forgot-password.html', {"email_not_exists": True})
-        return render(request, 'accounts/forgot-password.html', {"email_send": True})
-    return render(request, 'accounts/forgot-password.html')
+class PasswordResetDoneView(auth_views.PasswordResetDoneView):
+    template_name = "accounts/password_reset_done.html"
 
 
-def reset_password_page(request):
-    return render(request, 'accounts/reset-password.html')
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    template_name = "accounts/password_reset_confirm.html"
+    success_url = reverse_lazy("password_reset_complete")
+
+
+class PasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    template_name = "accounts/password_reset_complete.html"
