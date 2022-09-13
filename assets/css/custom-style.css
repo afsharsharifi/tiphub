@@ -95,3 +95,17 @@
     color: gray !important;
     border: 2px solid gray !important;
 }
+
+
+.form-input-defualt input {
+    width: 100%;
+}
+
+
+.input-for-defualt {
+    background-color: #EEE;
+    padding: 10px 15px;
+    border-radius: 8px;
+    direction: rtl;
+    text-align: inherit;
+}

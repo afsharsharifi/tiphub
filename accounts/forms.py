@@ -123,5 +123,16 @@ class EditUserProfileForm(forms.ModelForm):
                 "class": "email-input",
                 "type": "tel",
                 "maxlength": "11",
-            })
+                "placeholder": "شماره تلفن",
+            }),
+            "email": forms.EmailInput(attrs={
+                "class": "email-input",
+                "placeholder": "پست الکترونیک",
+                "dir": "ltr",
+            }),
+            "image": forms.FileInput(attrs={
+                "class": "d-none",
+                "id": "select-image",
+                "accept": ".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*",
+            }),
         }

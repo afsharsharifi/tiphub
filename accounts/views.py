@@ -8,6 +8,7 @@ from django.views.generic import View
 from django.views.generic.edit import FormView, UpdateView
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import views as auth_views
 
 from . import forms
 from .models import CustomUser
@@ -108,59 +109,34 @@ class EditUserProfileView(View):
     template_name = "accounts/edit-user-panel.html"
 
     def get(self, request, *args, **kwargs):
+        if not self.request.user.is_phone_verified:
+            return redirect('accounts:phone_verifaction')
         form = forms.EditUserProfileForm(instance=request.user)
         return render(request, 'accounts/edit-user-panel.html', {'form': form})
 
     def post(self, request, *args, **kwargs):
-        form = forms.EditUserProfileForm(request.POST, request.FILES, instance=request.user.id)
+        form = forms.EditUserProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            form.save()
-            return HttpResponse("Form Saved")
-        return HttpResponse("Form is not valid")
-        # fullname = request.POST.get("fullname")
-        # phone = request.POST.get("phone")
-        # email = request.POST.get("email")
-        # image = request.FILES.get("profile-image")
-        # CustomUser.objects.filter(id=self.request.user.id).update(
-        #     fullname=fullname,
-        #     phone=phone,
-        #     email=email,
-        #     image=image,
-        # )
-        # obj, created = CustomUser.objects.update_or_create(id=request.user.id, defaults={
-        #     'fullname': fullname,
-        #     'phone': phone,
-        #     'email': email,
-        #     'image': image,
-        # },)
-        return redirect('accounts:edit_profile')
+            instance = form.save(commit=False)
+            if "phone" in form.changed_data:
+                instance.is_phone_verified = False
+            if "email" in form.changed_data:
+                instance.is_email_verified = False
+            instance.save()
+            return redirect("accounts:edit_profile")
+        return render(request, self.template_name)
 
 
-# @login_required
-# def edit_user_profile_page(request):
-#     if not request.user.is_phone_verified:
-#         return redirect('accounts:phone_verifaction')
-#     if request.method == "POST":
-#         fullname = request.POST.get("fullname")
-#         phone = request.POST.get("phone")
-#         email = request.POST.get("email")
-#         image = request.FILES.get("profile-image")
-#         print(image)
-#         obj, created = CustomUser.objects.update_or_create(id=request.user.id, defaults={
-#             'fullname': fullname,
-#             'phone': phone,
-#             'email': email,
-#             'image': image,
-#         },)
-#         return redirect('accounts:edit_profile')
-#     context = {}
-#     return render(request, 'accounts/edit-user-panel.html', context)
+class PasswordChangeView(auth_views.PasswordChangeView):
+    template_name = "accounts/password_change_form.html"
 
 
-@login_required
-def logout_page(request):
-    logout(request)
-    return redirect('home:index')
+class PasswordChangeDoneView(auth_views.PasswordChangeDoneView):
+    template_name = "accounts/password_change_done.html"
+
+
+class PasswordResetView(auth_views.PasswordResetView):
+    template_name = "accounts/password_reset_form.html"
 
 
 def forgot_password_page(request):

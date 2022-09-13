@@ -42,21 +42,21 @@
                                     <i id="image_change" class="fa fa-camera"></i>
                                 </div>
                             </div>
-                            <input class="d-none" id="select-image" name="profile-image" type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" value="{% if request.user.image %}{{ request.user.image.url }}{% endif %}">
+                            {{ form.image }}
                             <!-- item -->
                             <div class="user-panel-field">
                                 <i class="fa fa-user"></i>
-                                <input name="fullname" class="email-input" type="text" placeholder="نام و نام خانوادگی" value="">
+                                {{ form.fullname }}
                             </div>
                             <!-- item -->
                             <div class="user-panel-field">
                                 <i class="fa fa-phone"></i>
-                                <input name="phone" class="email-input" type="tel" placeholder="شماره تلفن" value="{{ request.user.phone }}">
+                                {{ form.phone }}
                             </div>
                             <!-- item -->
                             <div class="user-panel-field w-100">
                                 <i class="fa fa-envelope"></i>
-                                <input name="email" class="email-input" type="email" placeholder="پست الکترونیک" dir="ltr" value="{{ request.user.email }}">
+                                {{ form.email }}
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-3 ">
