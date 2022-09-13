@@ -1,5 +1,6 @@
 from django import forms
 from django.core import validators
+from django.contrib.auth import authenticate
 from .models import CustomUser
 
 
@@ -61,7 +62,7 @@ class RegisterForm(forms.Form):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-        is_email_exists = CustomUser.objects.filter(email=email).exists()
+        is_email_exists = CustomUser.objects.filter(email=email.lower()).exists()
 
         if is_email_exists:
             raise forms.ValidationError('کاربری با این ایمیل وجود دارد')
@@ -103,9 +104,7 @@ class LoginForm(forms.Form):
         label='گذرواژه',
     )
 
-    def clean_phone(self):
-        phone = self.cleaned_data["phone"]
-        is_phone_exists = CustomUser.objects.filter(phone=phone).exists()
-        if not is_phone_exists:
-            raise forms.ValidationError('کاربری با این مشخصات یافت نشد')
-        return phone
+    def clean(self):
+        user = authenticate(username=self.cleaned_data.get("username"), password=self.cleaned_data.get("password"))
+        if user is None:
+            raise forms.ValidationError("گذزواژه یا شماره تلفن اشتباه است", code="invalid_information")

@@ -2,55 +2,51 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from extensions.utils import generate_otp
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormView
 
 from . import forms
 from .models import CustomUser
 
-# Create your views here.
 
+class RegisterView(FormView):
+    template_name = 'accounts/register.html'
+    form_class = forms.RegisterForm
+    success_url = reverse_lazy("accounts:login")
 
-def register_page(request):
-    if request.user.is_authenticated:
-        if request.user.is_phone_verified:
-            return redirect('accounts:user_panel')
-        return redirect('accounts:phone_verifaction')
-    register_form = forms.RegisterForm(request.POST or None)
-    if register_form.is_valid():
-        fullname = register_form.cleaned_data.get('fullname')
-        phone = register_form.cleaned_data.get('phone')
-        email = register_form.cleaned_data.get('email')
-        password = register_form.cleaned_data.get('password')
-        CustomUser.objects.create_user(fullname=fullname, email=email, phone=phone, password=password)
-        user = authenticate(request, phone=phone, password=password)
-        if user is not None:
-            login(request, user)
+    def form_valid(self, form):
+        form_data = form.cleaned_data
+        CustomUser.objects.create_user(**form_data)
+        return super().form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            if self.request.user.is_phone_verified:
+                return redirect('home:index')
             return redirect('accounts:phone_verifaction')
-
-    context = {
-        'register_form': register_form,
-    }
-    return render(request, 'accounts/register.html', context)
+        return super().get(request, *args, **kwargs)
 
 
-def login_page(request):
-    if request.user.is_authenticated:
-        if request.user.is_phone_verified:
-            return redirect('accounts:user_panel')
-        return redirect('accounts:phone_verifaction')
-    login_form = forms.LoginForm(request.POST or None)
-    if login_form.is_valid():
-        phone = login_form.cleaned_data.get('phone')
-        password = login_form.cleaned_data.get('password')
-        user = authenticate(request, phone=phone, password=password)
+class LoginView(FormView):
+    template_name = 'accounts/login.html'
+    form_class = forms.LoginForm
+    success_url = reverse_lazy("home:index")
+
+    def form_valid(self, form):
+        form_data = form.cleaned_data
+        user = authenticate(self.request, phone=form_data["phone"], password=form_data["password"])
         if user is not None:
-            login(request, user)
+            login(self.request, user)
             return redirect("accounts:user_panel")
-    context = {
-        'login_form': login_form,
-    }
-    return render(request, 'accounts/login.html', context)
+        return super().form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            if self.request.user.is_phone_verified:
+                return redirect('home:index')
+            return redirect('accounts:phone_verifaction')
+        return super().get(request, *args, **kwargs)
 
 
 @login_required

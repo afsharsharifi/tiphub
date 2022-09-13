@@ -11,18 +11,25 @@
                     <div class="custom-bg p-2">
                         <div class="my-3 text-center">ورود به حساب</div>
                         <form method="post">
+                            {% if form.non_field_errors %}
+                            <div class="col-12 mb-3 alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                <p class="text-danger">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                             {% csrf_token %}
                             <div class="field">
                                 <i class="fa fa-phone"></i>
-                                {{ login_form.phone }}
+                                {{ form.phone }}
                             </div>
                             <p class="d-none text-danger" id="digit-error">شماره تلفن نمیتواند شامل حروف باشد</p>
-                            {% for error in login_form.phone.errors %}
+                            {% for error in form.phone.errors %}
                             <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                             <div class="field">
                                 <i class="fa fa-lock"></i>
-                                {{ login_form.password }}
+                                {{ form.password }}
                                 <button type="button" id="password-visibility">
                                     <i id="eye-icon" class="fa fa-eye"></i>
                                 </button>
