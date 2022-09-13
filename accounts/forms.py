@@ -105,6 +105,23 @@ class LoginForm(forms.Form):
     )
 
     def clean(self):
-        user = authenticate(username=self.cleaned_data.get("username"), password=self.cleaned_data.get("password"))
+        user = authenticate(phone=self.cleaned_data.get("phone"), password=self.cleaned_data.get("password"))
         if user is None:
             raise forms.ValidationError("گذزواژه یا شماره تلفن اشتباه است", code="invalid_information")
+
+
+class EditUserProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ("fullname", "phone", "email", "image")
+        widgets = {
+            "fullname": forms.TextInput(attrs={
+                "class": "email-input",
+                "placeholder": "نام و نام خانوادگی"
+            }),
+            "phone": forms.TextInput(attrs={
+                "class": "email-input",
+                "type": "tel",
+                "maxlength": "11",
+            })
+        }

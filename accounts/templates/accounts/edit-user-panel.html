@@ -42,11 +42,11 @@
                                     <i id="image_change" class="fa fa-camera"></i>
                                 </div>
                             </div>
-                            <input class="d-none" id="select-image" name="profile-image" type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" value="{% if request.user.image %} {{ request.user.image.url }} {% endif %}">
+                            <input class="d-none" id="select-image" name="profile-image" type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" value="{% if request.user.image %}{{ request.user.image.url }}{% endif %}">
                             <!-- item -->
                             <div class="user-panel-field">
                                 <i class="fa fa-user"></i>
-                                <input name="fullname" class="email-input" type="text" placeholder="نام و نام خانوادگی" value="{{ request.user.fullname }}">
+                                <input name="fullname" class="email-input" type="text" placeholder="نام و نام خانوادگی" value="">
                             </div>
                             <!-- item -->
                             <div class="user-panel-field">

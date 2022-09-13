@@ -4,7 +4,10 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from extensions.utils import generate_otp
 from django.urls import reverse_lazy
-from django.views.generic.edit import FormView
+from django.views.generic import View
+from django.views.generic.edit import FormView, UpdateView
+from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from . import forms
 from .models import CustomUser
@@ -49,12 +52,22 @@ class LoginView(FormView):
         return super().get(request, *args, **kwargs)
 
 
-@login_required
-def phone_verifaction_page(request):
-    if request.user.is_phone_verified:
-        return redirect("accounts:user_panel")
-    if request.method == "POST":
-        user = CustomUser.objects.get(id=request.user.id)
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request):
+        logout(request)
+        return redirect("home:index")
+
+
+class PhoneVerifactionView(LoginRequiredMixin, View):
+    template_name = 'accounts/phone-verifaction.html'
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_phone_verified:
+            return redirect("home:index")
+        return render(request, self.template_name, {"is_phone_verify": True})
+
+    def post(self, request, *args, **kwargs):
+        user = CustomUser.objects.get(id=self.request.user.id)
         phone = request.POST.get("phone")
         otp_code = request.POST.get("otp_code")
         if user.phone == phone and user.otp_code == otp_code:
@@ -63,16 +76,11 @@ def phone_verifaction_page(request):
             return redirect('accounts:user_panel')
         user.is_phone_verified = False
         user.save()
-        return render(request, 'accounts/phone-verifaction.html', {"is_phone_verify": False})
-    context = {
-        "is_phone_verify": True
-    }
-    return render(request, 'accounts/phone-verifaction.html', context)
+        return render(request, self.template_name, {"is_phone_verify": False})
 
 
-@login_required
-def send_otp_code(request):
-    if request.method == "POST":
+class SendOTPView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
         OTP_CODE = generate_otp()
         user = CustomUser.objects.get(id=request.user.id)
         phone = request.POST.get("phone")
@@ -87,33 +95,66 @@ def send_otp_code(request):
         return JsonResponse(context)
 
 
-@login_required
-def user_panel_page(request):
-    if not request.user.is_phone_verified:
-        return redirect('accounts:phone_verifaction')
-    context = {}
-    return render(request, 'accounts/user-panel.html', context)
+class UserPanelView(View):
+    template_name = 'accounts/user-panel.html'
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.is_phone_verified:
+            return redirect('accounts:phone_verifaction')
+        return render(request, self.template_name)
 
 
-@login_required
-def edit_user_profile_page(request):
-    if not request.user.is_phone_verified:
-        return redirect('accounts:phone_verifaction')
-    if request.method == "POST":
-        fullname = request.POST.get("fullname")
-        phone = request.POST.get("phone")
-        email = request.POST.get("email")
-        image = request.FILES.get("profile-image")
-        print(image)
-        obj, created = CustomUser.objects.update_or_create(id=request.user.id, defaults={
-            'fullname': fullname,
-            'phone': phone,
-            'email': email,
-            'image': image,
-        },)
+class EditUserProfileView(View):
+    template_name = "accounts/edit-user-panel.html"
+
+    def get(self, request, *args, **kwargs):
+        form = forms.EditUserProfileForm(instance=request.user)
+        return render(request, 'accounts/edit-user-panel.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = forms.EditUserProfileForm(request.POST, request.FILES, instance=request.user.id)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Form Saved")
+        return HttpResponse("Form is not valid")
+        # fullname = request.POST.get("fullname")
+        # phone = request.POST.get("phone")
+        # email = request.POST.get("email")
+        # image = request.FILES.get("profile-image")
+        # CustomUser.objects.filter(id=self.request.user.id).update(
+        #     fullname=fullname,
+        #     phone=phone,
+        #     email=email,
+        #     image=image,
+        # )
+        # obj, created = CustomUser.objects.update_or_create(id=request.user.id, defaults={
+        #     'fullname': fullname,
+        #     'phone': phone,
+        #     'email': email,
+        #     'image': image,
+        # },)
         return redirect('accounts:edit_profile')
-    context = {}
-    return render(request, 'accounts/edit-user-panel.html', context)
+
+
+# @login_required
+# def edit_user_profile_page(request):
+#     if not request.user.is_phone_verified:
+#         return redirect('accounts:phone_verifaction')
+#     if request.method == "POST":
+#         fullname = request.POST.get("fullname")
+#         phone = request.POST.get("phone")
+#         email = request.POST.get("email")
+#         image = request.FILES.get("profile-image")
+#         print(image)
+#         obj, created = CustomUser.objects.update_or_create(id=request.user.id, defaults={
+#             'fullname': fullname,
+#             'phone': phone,
+#             'email': email,
+#             'image': image,
+#         },)
+#         return redirect('accounts:edit_profile')
+#     context = {}
+#     return render(request, 'accounts/edit-user-panel.html', context)
 
 
 @login_required
