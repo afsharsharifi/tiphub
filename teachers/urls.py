@@ -6,5 +6,6 @@ app_name = "teachers"
 
 
 urlpatterns = [
-    path('<username>', views.teacher_profile_page, name="teacher_profile"),
+    path('', views.TeacherListView.as_view(), name="teacher_list"),
+    path('<username>/', views.TeacherDetailView.as_view(), name="teacher_detail"),
 ]

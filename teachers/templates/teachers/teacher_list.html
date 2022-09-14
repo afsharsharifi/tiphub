@@ -1,0 +1,29 @@
+{% extends '_layout.html' %}
+{% load static %}
+{% block title %}تیپ هاب - پروفایل استاد{% endblock %}
+{% block content %}
+<main>
+    <section class="my-5 container bg-white py-5">
+        <h3 class="our-team-title">اعضای تیم</h3>
+        <div class="d-flex align-items-center justify-content-center flex-wrap">
+            {% for teacher in teachers %}
+            <!-- item -->
+            <a href="{{ teacher.get_absolute_url }}" class="member">
+                <div class="member-img-box">
+                    {% if teacher.user.image %}
+                    <img src="{{ teacher.user.image.url }}" alt="تصویر {{ teacher.user.fullname }}" class="ui circular image">
+                    {% else %}
+                    <img src="{% static 'image/sutdent-prof.png' %}" alt="تصویر {{ teacher.user.fullname }}">
+                    {% endif %}
+                    <div class="member-overlay"></div>
+                </div>
+                <h1 class="text-dark h4 mt-1">{{ teacher.user.fullname }}</h1>
+                <h2 class="text-dark h6 d-block" style="direction: ltr;">
+                    &lt;{{ teacher.title }}/&gt;
+                </h2>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

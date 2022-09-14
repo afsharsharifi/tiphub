@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import CustomUser
 from extensions.utils import get_extension_file, username_from_email
+from django.urls import reverse
 
 
 def create_resume_path_teacher(instance, filename):
@@ -30,3 +31,6 @@ class Teacher(models.Model):
 
     def __str__(self):
         return f"{self.user}"
+
+    def get_absolute_url(self):
+        return reverse("teachers:teacher_detail", kwargs={"username": self.username})
