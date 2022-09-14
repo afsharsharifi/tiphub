@@ -1,0 +1,279 @@
+{% extends '_layout.html' %}
+{% load static %}
+{% block title %}تیپ هاب - {{ video.title }}{% endblock %}
+{% block content %}
+<main>
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div>
+                        <!-- video -->
+                        <div class="video-player-box">
+                            <div class="video-icon">
+                                <div class="btn video-btn" onclick="playvideo()" id="videobtn">
+                                    <img src="{% static 'image/play-video-btn.png' %}" alt="">
+                                </div>
+                            </div>
+                            <div class="video">
+                                <video width="100%" id="myVideo" autoplay>
+                                    <source src="{{ video.video.url }}" type="video/mp4">
+                                </video>
+                                {% if video.cover_image %}
+                                <img src="{{ video.cover_image.url }}" width="100%" height="100%" class="position-absolute video-poster" alt="">
+                                {% else %}
+                                <img src="https://via.placeholder.com/350x180" width="100%" height="100%" class="position-absolute video-poster" alt="">
+                                {% endif %}
+
+                                <div class="video-overlay"></div>
+                                <div class="video-description px-2 text-white">
+                                    <p>{{ video.duration }}</p>
+                                </div>
+                                <h5 class="close-btn" onclick="stopPlayer()">X</h5>
+                            </div>
+                        </div>
+                        <!-- end video -->
+                        <!-- title -->
+                        <h3 class="video-title my-3">
+                            {{ video.title }}
+                        </h3>
+                        <div class="d-flex align-items-center justify-content-between border-bottom pb-3">
+                            <p class="color78">{{ video.jalali_published_at }}</p>
+                            <div class="d-flex align-items-center view-like">
+                                <div class="mx-3">
+                                    <span>{{ video.views }}</span>
+                                    <i class="fa fa-eye"></i>
+                                </div>
+                                <div>
+                                    <span>21</span>
+                                    <i class="fa fa-heart" type='button' aria-hidden="true"></i>
+                                    <!-- <i class="fa fa-heart liked" type='button' aria-hidden="true" ></i> -->
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- description -->
+                        <div class="border-bottom pb-3">
+                            <h4 class="my-3">درباره فیلم</h4>
+                            <p class="color78">
+                                {{ video.get_description }}
+                            </p>
+
+                            <div class="labels">
+                                <h4 class="my-3">برچسب ها</h4>
+                                <ul class="d-flex align-items-center">
+                                    <li><a href="#" title="">#گردشگری</a></li>
+                                    <li><a href="#" title="">#تفریحی </a></li>
+                                    <li><a href="#" title="">#دشت نور</a></li>
+                                    <li><a href="#" title="">#مکان های تفریحی</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- end des -->
+
+                        <!-- comments -->
+                        <div>
+
+                            <div class="py-3">
+                                <span>2982</span>
+                                <span>نظر</span>
+                            </div>
+
+                            <form action="">
+                                <textarea class="w-100 p-2 comment-area" name="" id="" cols="30" rows="10" placeholder="دیدگاه خود را بنویسید"></textarea>
+                                <div class="d-flex align-items-center justify-content-end pt-3">
+                                    <button class="btn custom-btn">ارسال نظر</button>
+                                </div>
+                            </form>
+                            <!-- comment -->
+                            <div class="comment my-3 p-2">
+                                <div class=" d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <img src="assets/image/sutdent-prof.png" alt="student" class="user-profile">
+                                        <p class="user-name pr-2">امیرحسین امیری</p>
+                                    </div>
+
+                                    <p class="comment-date-time"> چهار روز پیش</p>
+                                </div>
+                                <p class="px-4 py-2 comment-text text-justify"> لورم ایپسوم متن ساختگی
+                                    با تولید سادگی نامفهوم
+                                    از صنعت چاپ،
+                                    و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
+                                    روزنامه و مجله در ستون و سطرآنچنان که لازم است،</p>
+
+                                <div class="d-flex align-items-center justify-content-end reply" type='button'>
+                                    <i class="fa fa-reply"></i>
+                                    <p>پاسخ به این نظر</p>
+                                </div>
+                            </div>
+                            <!-- end comment -->
+                            <div class="comment my-3 p-2">
+                                <div class=" d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <img src="assets/image/sutdent-prof.png" alt="student" class="user-profile">
+                                        <p class="user-name pr-2">امیرحسین امیری</p>
+                                    </div>
+
+                                    <p class="comment-date-time"> چهار روز پیش</p>
+                                </div>
+                                <p class="px-4 py-2 comment-text text-justify"> لورم ایپسوم متن ساختگی
+                                    با تولید سادگی نامفهوم
+                                    از صنعت چاپ،
+                                    و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
+                                    روزنامه و مجله در ستون و سطرآنچنان که لازم است،</p>
+
+                                <div class="d-flex align-items-center justify-content-end reply" type='button'>
+                                    <i class="fa fa-reply"></i>
+                                    <p>پاسخ به این نظر</p>
+                                </div>
+                            </div>
+                            <!-- end comment -->
+                            <div class="comment my-3 p-2">
+                                <div class=" d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <img src="assets/image/sutdent-prof.png" alt="student" class="user-profile">
+                                        <p class="user-name pr-2">امیرحسین امیری</p>
+                                    </div>
+
+                                    <p class="comment-date-time"> چهار روز پیش</p>
+                                </div>
+                                <p class="px-4 py-2 comment-text text-justify"> لورم ایپسوم متن ساختگی
+                                    با تولید سادگی نامفهوم
+                                    از صنعت چاپ،
+                                    و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
+                                    روزنامه و مجله در ستون و سطرآنچنان که لازم است،</p>
+
+                                <div class="d-flex align-items-center justify-content-end reply" type='button'>
+                                    <i class="fa fa-reply"></i>
+                                    <p>پاسخ به این نظر</p>
+                                </div>
+                            </div>
+                            <!-- end comment child -->
+                            <div class="comment my-3 p-2 comment-child">
+                                <div class=" d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <img src="assets/image/sutdent-prof.png" alt="student" class="user-profile">
+                                        <p class="user-name pr-2"> امیرحسین امیری</p>
+                                    </div>
+
+                                    <p class="comment-date-time"> چهار روز پیش</p>
+                                </div>
+                                <p class="px-4 py-2 comment-text text-justify"> لورم ایپسوم متن ساختگی
+                                    با تولید سادگی نامفهوم
+                                    از صنعت چاپ،
+                                    و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
+                                    روزنامه و مجله در ستون و سطرآنچنان که لازم است،</p>
+
+                            </div>
+                            <!-- end comment -->
+                            <!-- end comment child -->
+                            <div class="comment my-3 p-2 comment-child">
+                                <div class=" d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <img src="assets/image/sutdent-prof.png" alt="student" class="user-profile">
+                                        <p class="user-name pr-2">امیرحسین امیری</p>
+                                    </div>
+
+                                    <p class="comment-date-time"> چهار روز پیش</p>
+                                </div>
+                                <p class="px-4 py-2 comment-text text-justify"> لورم ایپسوم متن ساختگی
+                                    با تولید سادگی نامفهوم
+                                    از صنعت چاپ،
+                                    و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
+                                    روزنامه و مجله در ستون و سطرآنچنان که لازم است،</p>
+
+                            </div>
+                            <!-- end comment -->
+
+
+
+                        </div>
+                        <!-- end comments -->
+
+                    </div>
+                </div>
+                <!-- main -->
+                <!-- side -->
+                <aside class="col-md-4 ">
+                    <div class="custom-bg p-2 teacher-card">
+                        <div class="border-bottom py-3 text-center">
+                            <h4>درباره استاد</h4>
+                        </div>
+                        <a href="{{ video.teacher.get_absolute_url }}" class="d-flex align-items-center py-3 card">
+                            {% if video.teacher.user.image %}
+                            <img src="{{ video.teacher.user.image.url }}" alt="student" class="teacher-profile">
+                            {% else %}
+                            <img src="{% static 'image/sutdent-prof.png' %}" alt="student" class="teacher-profile">
+                            {% endif %}
+                            <p class="user-name pr-2 text-dark">
+                                {{ video.teacher.user.fullname }}
+                            </p>
+                        </a>
+                        <p class="color78 teacher-description py-3">
+                            {{ video.teacher.about }}
+                        </p>
+                        <div class="d-flex align-items-center justify-content-center flex-wrap">
+                            {% if video.teacher.instagram %}
+                            <a class="social-teacher text-dark" href="https://instagram.com/{{ video.teacher.instagram }}">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            {% endif %}
+                            {% if video.teacher.twitter %}
+                            <a class="social-teacher text-dark" href="https://twitter.com/{{ video.teacher.twitter }}">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            {% endif %}
+                            {% if video.teacher.github %}
+                            <a class="social-teacher text-dark" href="https://github.com/{{ video.teacher.github }}">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            {% endif %}
+                            {% if video.teacher.gitlab %}
+                            <a class="social-teacher text-dark" href="https://gitlab.com/{{ video.teacher.gitlab }}">
+                                <i class="fab fa-gitlab"></i>
+                            </a>
+                            {% endif %}
+                            {% if video.teacher.linkedin %}
+                            <a class="social-teacher text-dark" href="https://www.linkedin.com/in/{{ video.teacher.linkedin }}">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            {% endif %}
+                            {% if video.teacher.telegram %}
+                            <a class="social-teacher text-dark" href="https://t.me/{{ video.teacher.telegram }}">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                            {% endif %}
+                            {% if video.teacher.email %}
+                            <a class="social-teacher text-dark" href="mailto:{{ video.teacher.email }}">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                            {% endif %}
+                            {% if video.teacher.website %}
+                            <a class="social-teacher text-dark" href="{{ video.teacher.website }}">
+                                <i class="fa fa-globe"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- end side -->
+            </div>
+        </div>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block footer_ref %}
+<script>
+    function playvideo() {
+        document.getElementById("myVideo").play();
+    }
+
+    function stopPlayer() {
+        document.getElementById("myVideo").stop();
+    }
+</script>
+{% endblock %}

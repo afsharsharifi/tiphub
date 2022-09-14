@@ -8,18 +8,10 @@ from .models import Teacher
 class TeacherListView(ListView):
     model = Teacher
     context_object_name = "teachers"
-    paginate_by = 50
+    paginate_by = 16
 
 
 class TeacherDetailView(DetailView):
     model = Teacher
     slug_field = "username"
     slug_url_kwarg = "username"
-
-
-def teacher_profile_page(request, username):
-    teacher = get_object_or_404(Teacher, username=username)
-    context = {
-        'teacher': teacher,
-    }
-    return render(request, 'teachers/teacher-profile.html', context)

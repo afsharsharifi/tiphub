@@ -1,0 +1,76 @@
+{% extends '_layout.html' %}
+{% load static %}
+{% block title %}تیپ هاب - پروفایل استاد{% endblock %}
+{% block content %}
+<main>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h2 class="title-section">همه ویدیوها</h2>
+            </div>
+            <div class="row">
+                {% for video in videos %}
+                <div class="col-md-6 col-lg-4 my-2">
+                    <div class="custom-bg">
+                        <div class="video-card">
+                            <a href="{{ video.get_absolute_url }}" class="position-relative d-block ">
+                                {% if video.cover_image %}
+                                <img src="{{ video.cover_image.url }}" alt="" class="img-fluid w-100 h-100">
+                                {% else %}
+                                <img src="https://via.placeholder.com/350x180" alt="" class="img-fluid w-100 h-100">
+                                {% endif %}
+                                <div class="video-play-btn">
+                                    <i class="fa fa-play"></i>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between video-category-time">
+                                    <h6 class="">{{ video.category }}</h6>
+                                    <span class="vid-time">{{ video.duration }}</span>
+                                </div>
+                                <div class="video-card-details">
+                                    <div>
+                                        <span>{{ video.views }}</span>
+                                        <i class="fa fa-eye"></i>
+                                    </div>
+                                    <div>
+                                        <span>22</span>
+                                        <i class="fa fa-heart"></i>
+                                    </div>
+                                    <div>
+                                        <span>22</span>
+                                        <i class="fa fa-comment"></i>
+                                    </div>
+                                </div>
+                                <div class="article-overlay"></div>
+                            </a>
+
+                        </div>
+                        <a href="{{ video.get_absolute_url }}">
+                            <h5 class="video-card-title m-2">
+                                {{ video.get_description }}
+                            </h5>
+                        </a>
+                        <div class="my-3 pb-3 mx-2">
+                            <i class="fa fa-user  ml-1 "></i>
+                            <span>{{ video.teacher }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="d-flex align-items-center justify-content-center mb-3 pagination">
+                <a href="" class="mx-1"><i class="fa fa-chevron-right"></i></a>
+                <a href="" class="active mx-1">1</a>
+                <a href="" class="mx-1">2</a>
+                <a href="" class="mx-1">3</a>
+                <a href="" class="mx-1">4</a>
+                <a href="" class="mx-1">20</a>
+                <a href="" class="mx-1"><i class="fa fa-chevron-left"></i></a>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+{% endblock %}

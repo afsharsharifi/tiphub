@@ -11,4 +11,14 @@ class VideoAdmin(admin.ModelAdmin):
 
 @admin.register(models.Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("title", "url", "parent")
+    list_display = ("title", "slug", "parent")
+
+
+@admin.register(models.Like)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ("user", "video", "liked_at")
+
+
+@admin.register(models.Comment)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ("user", "video", "parent", "commented_at")
