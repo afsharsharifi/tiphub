@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "home.apps.HomeConfig",
     "accounts.apps.AccountsConfig",
     "teachers.apps.TeachersConfig",
+    "videos.apps.VideosConfig",
     # Installed Packages
     "django_cleanup.apps.CleanupConfig",
     "allauth",
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "widget_tweaks",
+    "ckeditor",
 ]
 
 SITE_ID = 1

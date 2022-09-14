@@ -5,6 +5,7 @@ from django.contrib.auth.models import Group
 from . import models
 
 
+@admin.register(models.CustomUser)
 class CustomUserAdmin(BaseUserAdmin):
     list_display = ('fullname', 'phone', 'email', 'is_active', 'is_admin', 'otp_code')
     list_filter = ('is_admin', 'is_active')
@@ -24,5 +25,4 @@ class CustomUserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
-admin.site.register(models.CustomUser, CustomUserAdmin)
 admin.site.unregister(Group)

@@ -3,6 +3,7 @@ from . import models
 # Register your models here.
 
 
+@admin.register(models.Teacher)
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'username')
     fieldsets = (
@@ -12,6 +13,3 @@ class TeacherAdmin(admin.ModelAdmin):
         ('فایل رزومه', {'fields': ('resume',)}),
     )
     search_fields = ('user', 'username', 'email')
-
-
-admin.site.register(models.Teacher, TeacherAdmin)
