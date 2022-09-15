@@ -16,7 +16,7 @@
                                 </div>
                             </div>
                             <div class="video">
-                                <video width="100%" id="myVideo" autoplay>
+                                <video width="100%" id="myVideo">
                                     <source src="{{ video.video.url }}" type="video/mp4">
                                 </video>
                                 {% if video.cover_image %}
@@ -45,9 +45,8 @@
                                     <i class="fa fa-eye"></i>
                                 </div>
                                 <div>
-                                    <span>21</span>
-                                    <i class="fa fa-heart" type='button' aria-hidden="true"></i>
-                                    <!-- <i class="fa fa-heart liked" type='button' aria-hidden="true" ></i> -->
+                                    <span id="likes-count">{{ video.likes.count }}</span>
+                                    <i id="like-btn" class="{% if is_liked %}fa fa-heart liked{% else %}far fa-heart{% endif %}" type='button' aria-hidden="true"></i>
                                 </div>
 
                             </div>
@@ -268,12 +267,57 @@
 
 {% block footer_ref %}
 <script>
-    function playvideo() {
-        document.getElementById("myVideo").play();
-    }
+    const videobtn = document.querySelector('.video-btn');
+    const video = document.querySelector('.video');
+    const videotag = document.querySelector('video')
+    const videoDescription = document.querySelector('.video-description')
+    const closeBtn = document.querySelector('.close-btn')
+    const videoPoster = document.querySelector('.video-poster')
+    const videoOverlay = document.querySelector('.video-overlay')
 
     function stopPlayer() {
-        document.getElementById("myVideo").stop();
+        videobtn.style.display = "block";
+        closeBtn.style.display = 'none';
+        videoPoster.style.display = 'inline'
+        video.style.zIndex = '-1'
+        videotag.pause()
+        videotag.style.borderRadius = '20px'
+        videoDescription.style.display = 'flex'
+        videotag.controls = false
+        videotag.style.borderRadius = '15px'
+        videoOverlay.style.display = 'block'
+    };
+
+    function playvideo() {
+        videobtn.style.display = "none";
+        video.style.zIndex = '22222'
+        videotag.autoplay = true
+        videotag.play()
+        videotag.style.borderRadius = '20px'
+        videotag.controls = true
+        videoDescription.style.display = 'none'
+        closeBtn.style.display = 'block'
+        videoPoster.style.display = 'none'
+        videoOverlay.style.display = 'none'
     }
+</script>
+<script>
+    document.getElementById("like-btn").addEventListener("click", function() {
+        icon = document.getElementById("like-btn")
+        $.ajax({
+            type: "get",
+            url: "http://127.0.0.1:8000/videos/like/{{ video.id }}",
+            success: function(result) {
+                if (result.response === "like") {
+                    icon.classList = "fa fa-heart liked"
+                    console.log(result.response);
+                } else {
+                    icon.classList = "far fa-heart"
+                    console.log(result.response);
+                }
+                document.getElementById("likes-count").innerText = result.count
+            },
+        })
+    })
 </script>
 {% endblock %}
