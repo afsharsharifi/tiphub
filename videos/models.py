@@ -43,9 +43,9 @@ class Video(models.Model):
     title = models.CharField(max_length=255, verbose_name="عنوان")
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name="videos", verbose_name="استاد")
     slug = models.SlugField(unique=True, allow_unicode=True, blank=True, verbose_name="عنوان برای URL")
-    views = models.IntegerField(default=0, verbose_name="بازدیدها")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="videos", verbose_name="دسته بندی")
     video = models.FileField(upload_to=create_videos_path, verbose_name="فایل ویدئو")
+    views = models.IntegerField(default=0, verbose_name="بازدید ویديو")
     cover_image = models.ImageField(upload_to=create_cover_image_path, null=True, blank=True, verbose_name="کاور ویدئو")
     duration = models.DurationField(verbose_name="طول ویدئو")
     description = RichTextField(verbose_name="توضیحات")
@@ -97,6 +97,11 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user.fullname} - {self.video.title}"
+
+    def jalali_liked_at(self):
+        jalili_date = jdatetime.date.fromgregorian(date=self.liked_at)
+        return f"{jalili_date.year}/{jalili_date.month}/{jalili_date.day}"
+    jalali_liked_at.short_description = "لایک شده در تاریخ"
 
 
 class Comment(models.Model):

@@ -5,7 +5,7 @@ from . import models
 
 @admin.register(models.Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ("show_image", "title", "teacher", "views", "duration", "jalali_published_at", "jalali_updated_at")
+    list_display = ("show_image", "title", "teacher", "duration", "jalali_published_at", "jalali_updated_at")
     list_display_links = ("title",)
 
 
@@ -16,7 +16,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(models.Like)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("user", "video", "liked_at")
+    list_display = ("user", "video", "jalali_liked_at")
 
 
 @admin.register(models.Comment)
