@@ -9,6 +9,7 @@ from django.views.generic.edit import FormView, UpdateView
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import views as auth_views
+from .mixins import PhoneVerifactionRequiredMixin
 
 from . import forms
 from .models import CustomUser
@@ -96,12 +97,10 @@ class SendOTPView(LoginRequiredMixin, View):
         return JsonResponse(context)
 
 
-class UserPanelView(View):
+class UserPanelView(PhoneVerifactionRequiredMixin, View):
     template_name = 'accounts/user-panel.html'
 
     def get(self, request, *args, **kwargs):
-        if not self.request.user.is_phone_verified:
-            return redirect('phone_verifaction')
         return render(request, self.template_name)
 
 
