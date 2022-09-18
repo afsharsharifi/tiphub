@@ -1,10 +1,10 @@
+from accounts.models import UserIP
 from .models import Like, Video, Comment
-from django.views.generic import ListView, DetailView, View, TemplateView
+from django.views.generic import ListView, DetailView, View
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404
+from django.db.models import Count
 from django.core.paginator import Paginator
-
-# Create your views here.
 
 
 class VideoListView(ListView):
@@ -15,6 +15,17 @@ class VideoListView(ListView):
 
 class VideoDetailView(DetailView):
     model = Video
+    template_name = "videos/video_detail.html"
+
+    def get(self, request, *args, **kwargs):
+        video = get_object_or_404(Video, slug=self.kwargs['slug'])
+        user_ip, is_created = UserIP.objects.get_or_create(user_ip=request.META.get('REMOTE_ADDR'))
+        video.viewers_by_ip.add(user_ip)
+        return super().get(request, *args, **kwargs)
+
+    def post(self, *args, **kwargs):
+        comment = self.request.POST['comment_body']
+        return HttpResponse(comment)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -25,11 +36,8 @@ class VideoDetailView(DetailView):
         context['comments'] = paginator.get_page(page)
         context["is_liked"] = self.request.user.likes.filter(video=self.object.id).exists()
         context["likes_count"] = self.request.user.likes.filter(video=self.object.id).count()
+        context["views"] = Video.objects.annotate(num_views_ip=Count('viewers_by_ip'),).order_by('-viewers_by_ip')
         return context
-
-    def post(self, *args, **kwargs):
-        comment = self.request.POST['comment_body']
-        return HttpResponse(comment)
 
 
 class LikeVideoView(View):

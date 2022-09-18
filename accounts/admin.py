@@ -25,4 +25,9 @@ class CustomUserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
+@admin.register(models.UserIP)
+class UserIPAdmin(admin.ModelAdmin):
+    list_display = ('user_ip',)
+
+
 admin.site.unregister(Group)

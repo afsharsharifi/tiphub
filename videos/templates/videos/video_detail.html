@@ -41,16 +41,14 @@
                             <p class="color78">{{ video.jalali_published_at }}</p>
                             <div class="d-flex align-items-center view-like">
                                 <div class="mx-3">
-                                    <span>{{ video.views }}</span>
+                                    <span>{{ video.viewers_by_ip.count }}</span>
                                     <i class="fa fa-eye"></i>
                                 </div>
                                 <div>
                                     <span id="likes-count">{{ video.likes.count }}</span>
                                     <i id="like-btn" class="{% if is_liked %}fa fa-heart liked{% else %}far fa-heart{% endif %}" type='button' aria-hidden="true"></i>
                                 </div>
-
                             </div>
-
                         </div>
                         <!-- description -->
                         <div class="border-bottom pb-3">

@@ -43,3 +43,14 @@ class CustomUser(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+
+class UserIP(models.Model):
+    user_ip = models.GenericIPAddressField(verbose_name="IP کاربر")
+
+    class Meta:
+        verbose_name = 'IP کاربر'
+        verbose_name_plural = 'IP های کاربران'
+
+    def __str__(self):
+        return self.user_ip

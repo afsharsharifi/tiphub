@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import CustomUser
+from accounts.models import CustomUser, UserIP
 from teachers.models import Teacher
 from ckeditor.fields import RichTextField
 from extensions.utils import get_extension_file, numeric_month_to_name
@@ -45,7 +45,8 @@ class Video(models.Model):
     slug = models.SlugField(unique=True, allow_unicode=True, blank=True, verbose_name="عنوان برای URL")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="videos", verbose_name="دسته بندی")
     video = models.FileField(upload_to=create_videos_path, verbose_name="فایل ویدئو")
-    views = models.IntegerField(default=0, verbose_name="بازدید ویديو")
+    # views = models.IntegerField(default=0, verbose_name="بازدید ویديو")
+    viewers_by_ip = models.ManyToManyField(UserIP, default="192.168.0.1", blank=True, related_name="viewer", verbose_name="بازدیدکنندگان بر اساس IP")
     cover_image = models.ImageField(upload_to=create_cover_image_path, null=True, blank=True, verbose_name="کاور ویدئو")
     duration = models.DurationField(verbose_name="طول ویدئو")
     description = RichTextField(verbose_name="توضیحات")
