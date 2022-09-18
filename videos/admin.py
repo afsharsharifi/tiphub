@@ -15,10 +15,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Like)
-class CategoryAdmin(admin.ModelAdmin):
+class LikeAdmin(admin.ModelAdmin):
     list_display = ("user", "video", "jalali_liked_at")
 
 
 @admin.register(models.Comment)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("user", "video", "parent", "commented_at")
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "user", "video", "parent", "commented_at")

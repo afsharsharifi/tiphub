@@ -31,11 +31,14 @@ class VideoDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         video = get_object_or_404(Video, slug=self.kwargs['slug'])
         _list = Comment.objects.filter(video=video, parent=None)
-        paginator = Paginator(_list, 15)
+        paginator = Paginator(_list, 10)
         page = self.request.GET.get('page')
         context['comments'] = paginator.get_page(page)
-        context["is_liked"] = self.request.user.likes.filter(video=self.object.id).exists()
-        context["likes_count"] = self.request.user.likes.filter(video=self.object.id).count()
+        if self.request.user.is_authenticated:
+            context["is_liked"] = self.request.user.likes.filter(video=self.object.id).exists()
+        else:
+            context["is_liked"] = False
+        context["likes_count"] = video.likes.filter(video=self.object.id).count()
         context["views"] = Video.objects.annotate(num_views_ip=Count('viewers_by_ip'),).order_by('-viewers_by_ip')
         return context
 

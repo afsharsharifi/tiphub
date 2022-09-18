@@ -45,7 +45,6 @@ class Video(models.Model):
     slug = models.SlugField(unique=True, allow_unicode=True, blank=True, verbose_name="عنوان برای URL")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="videos", verbose_name="دسته بندی")
     video = models.FileField(upload_to=create_videos_path, verbose_name="فایل ویدئو")
-    # views = models.IntegerField(default=0, verbose_name="بازدید ویديو")
     viewers_by_ip = models.ManyToManyField(UserIP, default="192.168.0.1", blank=True, related_name="viewer", verbose_name="بازدیدکنندگان بر اساس IP")
     cover_image = models.ImageField(upload_to=create_cover_image_path, null=True, blank=True, verbose_name="کاور ویدئو")
     duration = models.DurationField(verbose_name="طول ویدئو")
@@ -115,9 +114,10 @@ class Comment(models.Model):
     class Meta:
         verbose_name = "کامنت"
         verbose_name_plural = "کامنت ها"
+        ordering = ['-commented_at']
 
     def __str__(self):
-        return f"{self.user.fullname} - {self.video.title}"
+        return f"{self.comment[:20]}"
 
     def jalali_commented_at(self):
         jalili_date = jdatetime.date.fromgregorian(date=self.commented_at)

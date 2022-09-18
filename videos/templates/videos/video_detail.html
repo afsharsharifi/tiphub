@@ -69,7 +69,7 @@
                         </div>
                         <!-- end des -->
                         <!-- comments -->
-                        <div>
+                        <div id="comment-list">
                             <div class="py-3">
                                 <span>{{ video.comments.count }}</span>
                                 <span>نظر</span>
@@ -82,68 +82,56 @@
                                 </div>
                             </form>
                             <!-- comment -->
-                            {% for comment in comments %}
-                            {% if comment.parent == None %}
-                            <div class="comment my-3 p-2">
-                                <div class=" d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        {% if comment.user.image %}
-                                        <img src="{{ comment.user.image.url }}" alt="عکس {{ comment.user.fullname }}" class="user-profile">
-                                        {% else %}
-                                        <img src="{% static 'image/sutdent-prof.png' %}" alt="عکس {{ comment.user.fullname }}" class="user-profile">
-                                        {% endif %}
-                                        <p class="user-name pr-2">{{ comment.user.fullname }}</p>
+                            <div class="comments-list">
+                                {% for comment in comments %}
+                                {% if comment.parent == None %}
+                                <div class="comment my-3 p-2 infinite-item">
+                                    <div class=" d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            {% if comment.user.image %}
+                                            <img src="{{ comment.user.image.url }}" alt="عکس {{ comment.user.fullname }}" class="user-profile">
+                                            {% else %}
+                                            <img src="{% static 'image/sutdent-prof.png' %}" alt="عکس {{ comment.user.fullname }}" class="user-profile">
+                                            {% endif %}
+                                            <p class="user-name pr-2">{{ comment.user.fullname }}</p>
+                                        </div>
+
+                                        <p class="comment-date-time">{{ comment.jalali_commented_at }}</p>
                                     </div>
+                                    <p class="px-4 py-2 comment-text text-justify">
+                                        {{ comment.comment }}
+                                    </p>
 
-                                    <p class="comment-date-time">{{ comment.jalali_commented_at }}</p>
-                                </div>
-                                <p class="px-4 py-2 comment-text text-justify">
-                                    {{ comment.comment }}
-                                </p>
-
-                                <div class="d-flex align-items-center justify-content-end reply" type='button'>
-                                    <i class="fa fa-reply"></i>
-                                    <p>پاسخ به این نظر</p>
-                                </div>
-                            </div>
-                            {% for reply in comment.replies.all %}
-                            <div class="comment my-3 p-2 comment-child">
-                                <div class=" d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        {% if reply.user.image %}
-                                        <img src="{{ reply.user.image.url }}" alt="عکس {{ reply.user.fullname }}" class="user-profile">
-                                        {% else %}
-                                        <img src="{% static 'image/sutdent-prof.png' %}" alt="عکس {{ reply.user.fullname }}" class="user-profile">
-                                        {% endif %}
-                                        <p class="user-name pr-2">{{ reply.user.fullname }}</p>
+                                    <div class="d-flex align-items-center justify-content-end reply" type='button'>
+                                        <i class="fa fa-reply"></i>
+                                        <p>پاسخ به این نظر</p>
                                     </div>
-
-                                    <p class="comment-date-time">{{ reply.jalali_commented_at }}</p>
                                 </div>
-                                <p class="px-4 py-2 comment-text text-justify">
-                                    {{ reply.comment }}
-                                </p>
+                                {% for reply in comment.replies.all %}
+                                <div class="comment my-3 p-2 comment-child infinite-item">
+                                    <div class=" d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            {% if reply.user.image %}
+                                            <img src="{{ reply.user.image.url }}" alt="عکس {{ reply.user.fullname }}" class="user-profile">
+                                            {% else %}
+                                            <img src="{% static 'image/sutdent-prof.png' %}" alt="عکس {{ reply.user.fullname }}" class="user-profile">
+                                            {% endif %}
+                                            <p class="user-name pr-2">{{ reply.user.fullname }}</p>
+                                        </div>
+
+                                        <p class="comment-date-time">{{ reply.jalali_commented_at }}</p>
+                                    </div>
+                                    <p class="px-4 py-2 comment-text text-justify">
+                                        {{ reply.comment }}
+                                    </p>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                {% endfor %}
                             </div>
-                            {% endfor %}
-                            {% endif %}
-                            {% endfor %}
                         </div>
                         {% if comments.has_other_pages %}
-                        <div class="d-flex align-items-center justify-content-center mb-3 pagination">
-                            {% if comments.has_previous %}
-                            <a href="?page={{ comments.previous_page_number }}" class="mx-1"><i class="fa fa-chevron-right"></i></a>
-                            {% endif %}
-                            {% for i in comments.paginator.page_range %}
-                            {% if comments.number == i %}
-                            <a href="?page={{ i }}" class="active mx-1">{{ i }}</a>
-                            {% else %}
-                            <a href="?page={{ i }}" class="mx-1">{{ i }}</a>
-                            {% endif %}
-                            {% endfor %}
-                            {% if comments.has_next %}
-                            <a href="?page={{ comments.next_page_number }}" class="mx-1"><i class="fa fa-chevron-left"></i></a>
-                            {% endif %}
-                        </div>
+                        <a class="d-none infinite-more-link" href="?page={{ comments.next_page_number }}"><i class="fa fa-chevron-left"></i></a>
                         {% endif %}
                     </div>
                 </div>
@@ -274,5 +262,22 @@
             },
         })
     })
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.js" integrity="sha512-gmJ7g3lfVXyDAOdhgCzdN1mZMsC/bE421/f4k4rIn6Pqsn7ibyDrXe4IlnJu0+1dE31dvTI4/ILV9x/dcowGaw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    var infinite = new Waypoint.Infinite({
+        element: $('.comments-list')[0],
+        handler: function(direction) {
+            console.log("HERE");
+        },
+        offset: 'bottom-in-view',
+        onBeforePageLoad: function() {
+            $('.spinner-border').show();
+        },
+        onAfterPageLoad: function() {
+            $('.spinner-border').hide();
+        }
+    });
 </script>
 {% endblock %}
