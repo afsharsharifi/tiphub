@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from videos.models import Video
-# Create your views here.
 
 
 class HomePageView(TemplateView):

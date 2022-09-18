@@ -1,10 +1,11 @@
 from accounts.models import UserIP
-from .models import Like, Video, Comment
-from django.views.generic import ListView, DetailView, View
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import get_object_or_404
-from django.db.models import Count
 from django.core.paginator import Paginator
+from django.db.models import Count
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
+from django.views.generic import DetailView, ListView, View
+
+from .models import Comment, Like, Video
 
 
 class VideoListView(ListView):

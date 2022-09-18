@@ -1,7 +1,7 @@
-from django.db import models
 from accounts.models import CustomUser
-from extensions.utils import get_extension_file, username_from_email
+from django.db import models
 from django.urls import reverse
+from extensions.utils import get_extension_file, username_from_email
 
 
 def create_resume_path_teacher(instance, filename):

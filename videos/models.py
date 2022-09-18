@@ -1,14 +1,14 @@
-from django.db import models
-from accounts.models import CustomUser, UserIP
-from teachers.models import Teacher
-from ckeditor.fields import RichTextField
-from extensions.utils import get_extension_file, numeric_month_to_name
-from django.utils.text import slugify
-from django.utils.html import format_html
-import jdatetime
-from django.urls import reverse
 import re
-# Create your models here.
+
+import jdatetime
+from accounts.models import CustomUser, UserIP
+from ckeditor.fields import RichTextField
+from django.db import models
+from django.urls import reverse
+from django.utils.html import format_html
+from django.utils.text import slugify
+from extensions.utils import get_extension_file, numeric_month_to_name
+from teachers.models import Teacher
 
 
 def create_videos_path(instance, filename):

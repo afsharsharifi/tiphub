@@ -1,6 +1,7 @@
 from django import forms
-from django.core import validators
 from django.contrib.auth import authenticate
+from django.core import validators
+
 from .models import CustomUser
 
 

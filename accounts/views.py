@@ -1,17 +1,15 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from extensions.utils import generate_otp
 from django.urls import reverse_lazy
 from django.views.generic import View
-from django.views.generic.edit import FormView, UpdateView
-from django.http import HttpResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import views as auth_views
-from .mixins import PhoneVerifactionRequiredMixin
+from django.views.generic.edit import FormView
+from extensions.utils import generate_otp
 
 from . import forms
+from .mixins import PhoneVerifactionRequiredMixin
 from .models import CustomUser
 
 
