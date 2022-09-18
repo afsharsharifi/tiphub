@@ -1,7 +1,8 @@
-from .models import Like, Video
-from django.views.generic import ListView, DetailView, View
-from django.http import JsonResponse
+from .models import Like, Video, Comment
+from django.views.generic import ListView, DetailView, View, TemplateView
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -17,9 +18,18 @@ class VideoDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        video = get_object_or_404(Video, slug=self.kwargs['slug'])
+        _list = Comment.objects.filter(video=video, parent=None)
+        paginator = Paginator(_list, 15)
+        page = self.request.GET.get('page')
+        context['comments'] = paginator.get_page(page)
         context["is_liked"] = self.request.user.likes.filter(video=self.object.id).exists()
         context["likes_count"] = self.request.user.likes.filter(video=self.object.id).count()
         return context
+
+    def post(self, *args, **kwargs):
+        comment = self.request.POST['comment_body']
+        return HttpResponse(comment)
 
 
 class LikeVideoView(View):

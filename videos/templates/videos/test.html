@@ -1,0 +1,60 @@
+<!-- comments -->
+<div>
+    <div class="py-3">
+        <span>{{ video.comments.count }}</span>
+        <span>نظر</span>
+    </div>
+    <form action="">
+        <textarea class="w-100 p-2 comment-area" name="" id="" cols="30" rows="10" placeholder="دیدگاه خود را بنویسید"></textarea>
+        <div class="d-flex align-items-center justify-content-end pt-3">
+            <button class="btn custom-btn">ارسال نظر</button>
+        </div>
+    </form>
+    <!-- comment -->
+    {% for comment in video.comments.all %}
+    {% if comment.parent == None %}
+    <div class="comment my-3 p-2">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center justify-content-center">
+                {% if comment.user.image %}
+                <img src="{{ comment.user.image.url }}" alt="عکس {{ comment.user.fullname }}" class="user-profile">
+                {% else %}
+                <img src="{% static 'image/sutdent-prof.png' %}" alt="عکس {{ comment.user.fullname }}" class="user-profile">
+                {% endif %}
+                <p class="user-name pr-2">{{ comment.user.fullname }}</p>
+            </div>
+
+            <p class="comment-date-time">{{ comment.jalali_commented_at }}</p>
+        </div>
+        <p class="px-4 py-2 comment-text text-justify">
+            {{ comment.comment }}
+        </p>
+
+        <div class="d-flex align-items-center justify-content-end reply" type='button'>
+            <i class="fa fa-reply"></i>
+            <p>پاسخ به این نظر</p>
+        </div>
+    </div>
+    {% for reply in comment.replies.all %}
+    <div class="comment my-3 p-2 comment-child">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center justify-content-center">
+                {% if reply.user.image %}
+                <img src="{{ reply.user.image.url }}" alt="عکس {{ reply.user.fullname }}" class="user-profile">
+                {% else %}
+                <img src="{% static 'image/sutdent-prof.png' %}" alt="عکس {{ reply.user.fullname }}" class="user-profile">
+                {% endif %}
+                <p class="user-name pr-2">{{ reply.user.fullname }}</p>
+            </div>
+
+            <p class="comment-date-time">{{ reply.jalali_commented_at }}</p>
+        </div>
+        <p class="px-4 py-2 comment-text text-justify">
+            {{ reply.comment }}
+        </p>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+</div>
+<!-- end comments -->

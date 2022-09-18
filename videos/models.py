@@ -117,3 +117,8 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user.fullname} - {self.video.title}"
+
+    def jalali_commented_at(self):
+        jalili_date = jdatetime.date.fromgregorian(date=self.commented_at)
+        return f"{jalili_date.day} {numeric_month_to_name(jalili_date.month)} {jalili_date.year}"
+    jalali_commented_at.short_description = "کامنت شده در تاریخ"

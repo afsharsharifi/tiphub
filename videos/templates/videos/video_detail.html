@@ -70,126 +70,83 @@
                             </div>
                         </div>
                         <!-- end des -->
-
                         <!-- comments -->
                         <div>
-
                             <div class="py-3">
-                                <span>2982</span>
+                                <span>{{ video.comments.count }}</span>
                                 <span>نظر</span>
                             </div>
-
-                            <form action="">
-                                <textarea class="w-100 p-2 comment-area" name="" id="" cols="30" rows="10" placeholder="دیدگاه خود را بنویسید"></textarea>
+                            <form method="post">
+                                {% csrf_token %}
+                                <textarea class="w-100 p-2 comment-area" name="comment_body" id="comment-body" cols="30" rows="10" placeholder="دیدگاه خود را بنویسید"></textarea>
                                 <div class="d-flex align-items-center justify-content-end pt-3">
                                     <button class="btn custom-btn">ارسال نظر</button>
                                 </div>
                             </form>
                             <!-- comment -->
+                            {% for comment in comments %}
+                            {% if comment.parent == None %}
                             <div class="comment my-3 p-2">
                                 <div class=" d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <img src="assets/image/sutdent-prof.png" alt="student" class="user-profile">
-                                        <p class="user-name pr-2">امیرحسین امیری</p>
+                                        {% if comment.user.image %}
+                                        <img src="{{ comment.user.image.url }}" alt="عکس {{ comment.user.fullname }}" class="user-profile">
+                                        {% else %}
+                                        <img src="{% static 'image/sutdent-prof.png' %}" alt="عکس {{ comment.user.fullname }}" class="user-profile">
+                                        {% endif %}
+                                        <p class="user-name pr-2">{{ comment.user.fullname }}</p>
                                     </div>
 
-                                    <p class="comment-date-time"> چهار روز پیش</p>
+                                    <p class="comment-date-time">{{ comment.jalali_commented_at }}</p>
                                 </div>
-                                <p class="px-4 py-2 comment-text text-justify"> لورم ایپسوم متن ساختگی
-                                    با تولید سادگی نامفهوم
-                                    از صنعت چاپ،
-                                    و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
-                                    روزنامه و مجله در ستون و سطرآنچنان که لازم است،</p>
+                                <p class="px-4 py-2 comment-text text-justify">
+                                    {{ comment.comment }}
+                                </p>
 
                                 <div class="d-flex align-items-center justify-content-end reply" type='button'>
                                     <i class="fa fa-reply"></i>
                                     <p>پاسخ به این نظر</p>
                                 </div>
                             </div>
-                            <!-- end comment -->
-                            <div class="comment my-3 p-2">
-                                <div class=" d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <img src="assets/image/sutdent-prof.png" alt="student" class="user-profile">
-                                        <p class="user-name pr-2">امیرحسین امیری</p>
-                                    </div>
-
-                                    <p class="comment-date-time"> چهار روز پیش</p>
-                                </div>
-                                <p class="px-4 py-2 comment-text text-justify"> لورم ایپسوم متن ساختگی
-                                    با تولید سادگی نامفهوم
-                                    از صنعت چاپ،
-                                    و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
-                                    روزنامه و مجله در ستون و سطرآنچنان که لازم است،</p>
-
-                                <div class="d-flex align-items-center justify-content-end reply" type='button'>
-                                    <i class="fa fa-reply"></i>
-                                    <p>پاسخ به این نظر</p>
-                                </div>
-                            </div>
-                            <!-- end comment -->
-                            <div class="comment my-3 p-2">
-                                <div class=" d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <img src="assets/image/sutdent-prof.png" alt="student" class="user-profile">
-                                        <p class="user-name pr-2">امیرحسین امیری</p>
-                                    </div>
-
-                                    <p class="comment-date-time"> چهار روز پیش</p>
-                                </div>
-                                <p class="px-4 py-2 comment-text text-justify"> لورم ایپسوم متن ساختگی
-                                    با تولید سادگی نامفهوم
-                                    از صنعت چاپ،
-                                    و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
-                                    روزنامه و مجله در ستون و سطرآنچنان که لازم است،</p>
-
-                                <div class="d-flex align-items-center justify-content-end reply" type='button'>
-                                    <i class="fa fa-reply"></i>
-                                    <p>پاسخ به این نظر</p>
-                                </div>
-                            </div>
-                            <!-- end comment child -->
+                            {% for reply in comment.replies.all %}
                             <div class="comment my-3 p-2 comment-child">
                                 <div class=" d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <img src="assets/image/sutdent-prof.png" alt="student" class="user-profile">
-                                        <p class="user-name pr-2"> امیرحسین امیری</p>
+                                        {% if reply.user.image %}
+                                        <img src="{{ reply.user.image.url }}" alt="عکس {{ reply.user.fullname }}" class="user-profile">
+                                        {% else %}
+                                        <img src="{% static 'image/sutdent-prof.png' %}" alt="عکس {{ reply.user.fullname }}" class="user-profile">
+                                        {% endif %}
+                                        <p class="user-name pr-2">{{ reply.user.fullname }}</p>
                                     </div>
 
-                                    <p class="comment-date-time"> چهار روز پیش</p>
+                                    <p class="comment-date-time">{{ reply.jalali_commented_at }}</p>
                                 </div>
-                                <p class="px-4 py-2 comment-text text-justify"> لورم ایپسوم متن ساختگی
-                                    با تولید سادگی نامفهوم
-                                    از صنعت چاپ،
-                                    و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
-                                    روزنامه و مجله در ستون و سطرآنچنان که لازم است،</p>
-
+                                <p class="px-4 py-2 comment-text text-justify">
+                                    {{ reply.comment }}
+                                </p>
                             </div>
-                            <!-- end comment -->
-                            <!-- end comment child -->
-                            <div class="comment my-3 p-2 comment-child">
-                                <div class=" d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <img src="assets/image/sutdent-prof.png" alt="student" class="user-profile">
-                                        <p class="user-name pr-2">امیرحسین امیری</p>
-                                    </div>
-
-                                    <p class="comment-date-time"> چهار روز پیش</p>
-                                </div>
-                                <p class="px-4 py-2 comment-text text-justify"> لورم ایپسوم متن ساختگی
-                                    با تولید سادگی نامفهوم
-                                    از صنعت چاپ،
-                                    و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه
-                                    روزنامه و مجله در ستون و سطرآنچنان که لازم است،</p>
-
-                            </div>
-                            <!-- end comment -->
-
-
-
+                            {% endfor %}
+                            {% endif %}
+                            {% endfor %}
                         </div>
-                        <!-- end comments -->
-
+                        {% if comments.has_other_pages %}
+                        <div class="d-flex align-items-center justify-content-center mb-3 pagination">
+                            {% if comments.has_previous %}
+                            <a href="?page={{ comments.previous_page_number }}" class="mx-1"><i class="fa fa-chevron-right"></i></a>
+                            {% endif %}
+                            {% for i in comments.paginator.page_range %}
+                            {% if comments.number == i %}
+                            <a href="?page={{ i }}" class="active mx-1">{{ i }}</a>
+                            {% else %}
+                            <a href="?page={{ i }}" class="mx-1">{{ i }}</a>
+                            {% endif %}
+                            {% endfor %}
+                            {% if comments.has_next %}
+                            <a href="?page={{ comments.next_page_number }}" class="mx-1"><i class="fa fa-chevron-left"></i></a>
+                            {% endif %}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
                 <!-- main -->
@@ -306,7 +263,7 @@
         icon = document.getElementById("like-btn")
         $.ajax({
             type: "get",
-            url: "http://127.0.0.1:8000/videos/like/{{ video.id }}",
+            url: "{% url 'videos:like_video' video.id %}",
             success: function(result) {
                 if (result.response === "like") {
                     icon.classList = "fa fa-heart liked"
