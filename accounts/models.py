@@ -55,3 +55,14 @@ class UserIP(models.Model):
 
     def __str__(self):
         return self.user_ip
+
+
+class BlockUserIP(models.Model):
+    blocked_ip = models.GenericIPAddressField(verbose_name="IP کاربر")
+
+    class Meta:
+        verbose_name = 'IP مسدود'
+        verbose_name_plural = 'IP های مسدود'
+
+    def __str__(self):
+        return self.blocked_ip

@@ -30,4 +30,9 @@ class UserIPAdmin(admin.ModelAdmin):
     list_display = ('user_ip',)
 
 
+@admin.register(models.BlockUserIP)
+class BlockUserIPAdmin(admin.ModelAdmin):
+    list_display = ('blocked_ip',)
+
+
 admin.site.unregister(Group)
