@@ -1,46 +1,78 @@
-<nav class="nav-menu nav-menu-pc  d-none d-md-flex px-4" id="navbar">
-    <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item ">زبان های برنامه نویسی </a>
+<nav class="nav-menu nav-menu-pc d-none d-md-flex px-4" id="navbar">
+    <li class="mx-3 menu-item">
+        <a class="nav-menu-item">
+            <span>زبان های برنامه نویسی</span>
+        </a>
         <ul class="sub-menu">
-            <a href="">جاوا</a>
-            <a href="">پایتون </a>
-            <a href="">آیتم</a>
-            <a href=""> آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
+            <div onmouseover="activeMySubMenu(this)" onmouseleave="deactiveMySubMenu(this)">
+                <a href="#" class="menu-second-parent d-flex align-items-center justify-content-between">
+                    <span>جاوا</span>
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <ul class="final-sub-category">
+                    <a href="#">اسپرینگ</a>
+                    <a href="#">گردل</a>
+                </ul>
+            </div>
+            <div onmouseover="activeMySubMenu(this)" onmouseleave="deactiveMySubMenu(this)">
+                <a href="#" class="menu-second-parent d-flex align-items-center justify-content-between">
+                    <span>پایتون</span>
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <ul class="final-sub-category">
+                    <a href="#">جنگو</a>
+                    <a href="#">فلسک</a>
+                    <a href="#">فلت</a>
+                    <a href="#">سلنیوم</a>
+                </ul>
+            </div>
+            <div onmouseover="activeMySubMenu(this)" onmouseleave="deactiveMySubMenu(this)">
+                <a href="#" class="menu-second-parent d-flex align-items-center justify-content-between">
+                    <span>روبی</span>
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <ul class="final-sub-category">
+                    <a href="#">روبی آن ریلز</a>
+                </ul>
+            </div>
+            <div onmouseover="activeMySubMenu(this)" onmouseleave="deactiveMySubMenu(this)">
+                <a href="#" class="menu-second-parent d-flex align-items-center justify-content-between">
+                    <span>جاوا اسکریپت</span>
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <ul class="final-sub-category">
+                    <a href="#">ری اکت</a>
+                    <a href="#">انگیولار</a>
+                </ul>
+            </div>
         </ul>
     </li>
-    <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">فریمورک </a>
+    <li class="mx-3 menu-item">
+        <a class="nav-menu-item ">
+            <span>فریمورک ها</span>
+        </a>
         <ul class="sub-menu">
-            <a href="">جنگو</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-        </ul>
-    </li>
-    <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">طراحی وب</a>
-        <ul class="sub-menu">
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-        </ul>
-    </li>
-    <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">مهارت های ارتباطی</a>
-        <ul class="sub-menu">
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
-            <a href="">آیتم</a>
+            <a href="#">جنگو</a>
+            <a href="#">فلسک</a>
+            <a href="#">گین</a>
+            <a href="#">ری اکت</a>
+            <a href="#">فلاتر</a>
+            <a href="#">کیوی</a>
+            <a href="#">کیو تی</a>
         </ul>
     </li>
 </nav>
+<script>
+    function activeMySubMenu(element) {
+        let submenu = element.lastElementChild;
+        console.log(submenu);
+        submenu.classList.add("d-block")
+        submenu.classList.remove("d-none")
+    }
+
+    function deactiveMySubMenu(element) {
+        let submenu = element.lastElementChild;
+        submenu.classList.remove("d-block")
+        submenu.classList.add("d-none")
+    }
+</script>

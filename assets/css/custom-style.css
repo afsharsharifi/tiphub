@@ -109,3 +109,24 @@
     direction: rtl;
     text-align: inherit;
 }
+
+/* Menu and Sub Menu */
+
+.menu-second-parent:hover,
+.final-sub-category a:hover {
+    background-color: #e6e6e6;
+}
+
+.final-sub-category {
+    position: fixed;
+    top: 160px;
+    right: 240px;
+    background-color: white;
+    box-shadow: rgb(56 56 56 / 5%) -1px 4px 15px 3px;
+    min-width: 200px;
+    display: none;
+}
+
+.final-sub-category a {
+    display: block;
+}

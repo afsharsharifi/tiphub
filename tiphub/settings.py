@@ -166,3 +166,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # URLs
 LOGIN_URL = "/user/login"
+
+
+# Arvan Cloud Setting
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
