@@ -10,7 +10,6 @@ from .models import Comment, Like, Video
 
 class VideoListView(ListView):
     model = Video
-    context_object_name = "videos"
     paginate_by = 12
 
 

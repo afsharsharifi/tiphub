@@ -9,10 +9,14 @@
                 <div class="logo d-flex justify-content-center align-items-center ml-3">
                     <a href="{% url 'home:index' %}"><img src="{% static 'image/logo.png' %}" class="logo-img img-fluid" alt="" /></a>
                 </div>
-                <div class="nav-search-btn">
-                    <input type="search" placeholder="جستجو">
-                    <i class="fa fa-search"></i>
-                </div>
+                <form action="{% url 'home:search_video' %}" method="get">
+                    <div class="nav-search-btn">
+                        <input type="search" name="q" placeholder="جستجو">
+                        <button>
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
             <div class="d-block d-md-flex align-items-center pl-md-4">
                 <div class="dropdown notification-box">

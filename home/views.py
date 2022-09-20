@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.shortcuts import render, HttpResponse
+from django.views.generic import TemplateView, ListView
 from videos.models import Video
+from django.db.models import Q
 
 
 class HomePageView(TemplateView):
@@ -11,3 +12,15 @@ class HomePageView(TemplateView):
         context['newest_videos'] = Video.objects.all().order_by('-published_at')[:5]
         context['top_videos'] = Video.objects.all().order_by('-viewers_by_ip')[:5]
         return context
+
+
+class VideoSerachView(ListView):
+    model = Video
+    template_name = "videos/video_list.html"
+    paginate_by = 12
+
+    def get_queryset(self, *args, **kwargs):
+        query = self.request.GET.get("q")
+        return self.model.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
