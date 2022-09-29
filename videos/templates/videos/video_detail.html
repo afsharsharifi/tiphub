@@ -1,5 +1,6 @@
 {% extends '_layout.html' %}
 {% load static %}
+{% load filters %}
 {% block title %}تیپ هاب - {{ video.title }}{% endblock %}
 {% block content %}
 <main>
@@ -56,7 +57,6 @@
                             <p class="color78">
                                 {{ video.get_description }}
                             </p>
-
                             <div class="labels">
                                 <h4 class="my-3">برچسب ها</h4>
                                 <ul class="d-flex align-items-center">
@@ -74,9 +74,10 @@
                                 <span>{{ video.comments.count }}</span>
                                 <span>نظر</span>
                             </div>
-                            <form method="post">
+                            <form method="post" id="comment-view-scroll">
                                 {% csrf_token %}
                                 <textarea class="w-100 p-2 comment-area" name="comment_body" id="comment-body" cols="30" rows="10" placeholder="دیدگاه خود را بنویسید"></textarea>
+                                <input type="hidden" name="parent_id" id="parent_id" value="0">
                                 <div class="d-flex align-items-center justify-content-end pt-3">
                                     <button class="btn custom-btn">ارسال نظر</button>
                                 </div>
@@ -96,7 +97,7 @@
                                             <p class="user-name pr-2">{{ comment.user.fullname }}</p>
                                         </div>
 
-                                        <p class="comment-date-time">{{ comment.jalali_commented_at }}</p>
+                                        <p class="comment-date-time">{{ comment.commented_at|custom_timesince }}</p>
                                     </div>
                                     <p class="px-4 py-2 comment-text text-justify">
                                         {{ comment.comment }}
@@ -104,7 +105,7 @@
 
                                     <div class="d-flex align-items-center justify-content-end reply" type='button'>
                                         <i class="fa fa-reply"></i>
-                                        <p>پاسخ به این نظر</p>
+                                        <p onclick="replyTo('{{ comment.id }}', '{{ comment.comment }}')">پاسخ به این نظر</p>
                                     </div>
                                 </div>
                                 {% for reply in comment.replies.all %}
@@ -119,7 +120,7 @@
                                             <p class="user-name pr-2">{{ reply.user.fullname }}</p>
                                         </div>
 
-                                        <p class="comment-date-time">{{ reply.jalali_commented_at }}</p>
+                                        <p class="comment-date-time">{{ reply.commented_at|custom_timesince }}</p>
                                     </div>
                                     <p class="px-4 py-2 comment-text text-justify">
                                         {{ reply.comment }}
@@ -262,6 +263,15 @@
             },
         })
     })
+</script>
+<script>
+    function replyTo(comment_id, comment_body) {
+        $('html, body').stop(true, true).animate({
+            scrollTop: $("#comment-view-scroll").offset().top - 220
+        }, 500)
+        document.getElementById("parent_id").value = comment_id
+        document.getElementById("comment-body").placeholder = `در حال پاسخ دادن به '${comment_body}'`
+    }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.js"></script>

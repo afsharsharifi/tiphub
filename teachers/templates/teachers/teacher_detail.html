@@ -1,6 +1,6 @@
 {% extends '_layout.html' %}
 {% load static %}
-{% block title %}تیپ هاب - پروفایل استاد{% endblock %}
+{% block title %}تیپ هاب - پروفایل استاد {{ teacher.user.fullname }}{% endblock %}
 {% block content %}
 <main>
     <section class="py-5 my-5">
@@ -59,31 +59,16 @@
                             </a>
                             {% endif %}
                         </div>
-                        <div>
-                            {% if teacher.resume %}
-                            <a class="btn bg-success text-white d-flex align-items-center justify-content-center" href="#">
-                                <span class="mx-1">دانلود رزومه</span>
-                                <i class="fa fa-download mx-1"></i>
-                            </a>
-                            {% endif %}
-                        </div>
-                        <div class="row my-4">
+                        <div class="row my-4 w-50 text-center">
                             <div class="col-12 col-md-6">
                                 <span>تعداد ویدئوها: </span>
-                                <span class="value-cart-teacher">12</span>
-                                <span><a href="#">(مشاهده)</a></span>
+                                <span class="value-cart-teacher">{{ teacher.videos.count }}</span>
                             </div>
                             <div class="col-12 col-md-6">
-                                <span>مجموع زمان محتوای تولید شده: </span>
-                                <span class="value-cart-teacher">12 ساعت</span>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <span>مجموع زمان بازدیدها: </span>
-                                <span class="value-cart-teacher">122 ساعت</span>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <span>مجموع تعداد بازدیدها: </span>
-                                <span class="value-cart-teacher">127,458</span>
+                                <span>تعداد بازدیدها: </span>
+                                <script>
+                                    document.write(Intl.NumberFormat('en-US').format("{{ video_views }}"))
+                                </script>
                             </div>
                         </div>
                     </div>

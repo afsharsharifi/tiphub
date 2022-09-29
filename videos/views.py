@@ -23,15 +23,24 @@ class VideoDetailView(DetailView):
         video.viewers_by_ip.add(user_ip)
         return super().get(request, *args, **kwargs)
 
-    def post(self, *args, **kwargs):
-        comment = self.request.POST['comment_body']
-        return HttpResponse(comment)
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        video = get_object_or_404(Video, slug=self.kwargs['slug'])
+        comment = self.request.POST.get('comment_body')
+        parent_id = int(self.request.POST.get('parent_id'))
+        if parent_id != 0:
+            parent_comment = get_object_or_404(Comment, id=parent_id)
+            Comment.objects.create(user=user, video=video, parent=parent_comment, comment=comment)
+        else:
+            Comment.objects.create(user=user, video=video, parent=None, comment=comment)
+
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         video = get_object_or_404(Video, slug=self.kwargs['slug'])
         _list = Comment.objects.filter(video=video, parent=None)
-        paginator = Paginator(_list, 10)
+        paginator = Paginator(_list, 5)
         page = self.request.GET.get('page')
         context['comments'] = paginator.get_page(page)
         if self.request.user.is_authenticated:
