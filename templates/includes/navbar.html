@@ -1,78 +1,43 @@
-<nav class="nav-menu nav-menu-pc d-none d-md-flex px-4" id="navbar">
-    <li class="mx-3 menu-item">
-        <a class="nav-menu-item">
-            <span>زبان های برنامه نویسی</span>
-        </a>
-        <ul class="sub-menu">
-            <div onmouseover="activeMySubMenu(this)" onmouseleave="deactiveMySubMenu(this)">
-                <a href="#" class="menu-second-parent d-flex align-items-center justify-content-between">
-                    <span>جاوا</span>
-                    <i class="fa fa-arrow-left"></i>
+<nav class="navbar navbar-expand-md nav-menu-pc">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home:index' %}">
+                    <span><i class="fa fa-home text-dark"></i></span>
+                    <span class="text-dark">خانه</span>
                 </a>
-                <ul class="final-sub-category">
-                    <a href="#">اسپرینگ</a>
-                    <a href="#">گردل</a>
-                </ul>
-            </div>
-            <div onmouseover="activeMySubMenu(this)" onmouseleave="deactiveMySubMenu(this)">
-                <a href="#" class="menu-second-parent d-flex align-items-center justify-content-between">
-                    <span>پایتون</span>
-                    <i class="fa fa-arrow-left"></i>
+            </li>
+            {% for category in categories %}
+            {% if not category.parent %}
+            <li class="nav-item dropdown">
+                <a class="nav-link text-dark" href="{{ category.slug }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span>{{ category.title }}</span>
                 </a>
-                <ul class="final-sub-category">
-                    <a href="#">جنگو</a>
-                    <a href="#">فلسک</a>
-                    <a href="#">فلت</a>
-                    <a href="#">سلنیوم</a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="left: -40px; top: 90%;">
+                    {% for sub_category in category.children.all %}
+                    {% if not sub_category.children.all %}
+                    <li><a class="dropdown-item" href="{{ sub_category.slug }}">{{ sub_category.title }}</a></li>
+                    {% else %}
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item d-flex align-items-center justify-content-between mx-2" href="{{ sub_category.slug }}">
+                            <span>{{ sub_category.title }}</span>
+                            <span><i class="fa fa-arrow-left"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% for sub_sub_category in sub_category.children.all %}
+                            <li><a class="dropdown-item py-2 px-3" href="{{ sub_sub_category.slug }}">{{ sub_sub_category.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
                 </ul>
-            </div>
-            <div onmouseover="activeMySubMenu(this)" onmouseleave="deactiveMySubMenu(this)">
-                <a href="#" class="menu-second-parent d-flex align-items-center justify-content-between">
-                    <span>روبی</span>
-                    <i class="fa fa-arrow-left"></i>
-                </a>
-                <ul class="final-sub-category">
-                    <a href="#">روبی آن ریلز</a>
-                </ul>
-            </div>
-            <div onmouseover="activeMySubMenu(this)" onmouseleave="deactiveMySubMenu(this)">
-                <a href="#" class="menu-second-parent d-flex align-items-center justify-content-between">
-                    <span>جاوا اسکریپت</span>
-                    <i class="fa fa-arrow-left"></i>
-                </a>
-                <ul class="final-sub-category">
-                    <a href="#">ری اکت</a>
-                    <a href="#">انگیولار</a>
-                </ul>
-            </div>
+            </li>
+            {% endif %}
+            {% endfor %}
         </ul>
-    </li>
-    <li class="mx-3 menu-item">
-        <a class="nav-menu-item ">
-            <span>فریمورک ها</span>
-        </a>
-        <ul class="sub-menu">
-            <a href="#">جنگو</a>
-            <a href="#">فلسک</a>
-            <a href="#">گین</a>
-            <a href="#">ری اکت</a>
-            <a href="#">فلاتر</a>
-            <a href="#">کیوی</a>
-            <a href="#">کیو تی</a>
-        </ul>
-    </li>
+    </div>
 </nav>
-<script>
-    function activeMySubMenu(element) {
-        let submenu = element.lastElementChild;
-        console.log(submenu);
-        submenu.classList.add("d-block")
-        submenu.classList.remove("d-none")
-    }
-
-    function deactiveMySubMenu(element) {
-        let submenu = element.lastElementChild;
-        submenu.classList.remove("d-block")
-        submenu.classList.add("d-none")
-    }
-</script>

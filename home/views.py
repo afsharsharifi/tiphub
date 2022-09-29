@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from django.views.generic import TemplateView, ListView
-from videos.models import Video
+from videos.models import Video, Category
 from django.db.models import Q
 
 
@@ -11,6 +11,7 @@ class HomePageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['newest_videos'] = Video.objects.all().order_by('-published_at')[:5]
         context['top_videos'] = Video.objects.all().order_by('-viewers_by_ip')[:5]
+        context['categories'] = Category.objects.all()
         return context
 
 
