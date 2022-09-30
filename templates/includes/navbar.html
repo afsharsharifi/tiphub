@@ -16,19 +16,19 @@
                 <a class="nav-link text-dark" href="{{ category.slug }}" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span>{{ category.title }}</span>
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="left: -40px; top: 90%;">
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="left: -40px; top: 90%; padding: 0;">
                     {% for sub_category in category.children.all %}
                     {% if not sub_category.children.all %}
-                    <li><a class="dropdown-item" href="{{ sub_category.slug }}">{{ sub_category.title }}</a></li>
+                    <li><a class="dropdown-item px-2 py-3" href="{{ sub_category.slug }}">{{ sub_category.title }}</a></li>
                     {% else %}
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item d-flex align-items-center justify-content-between mx-2" href="{{ sub_category.slug }}">
+                    <li class="dropdown-submenu" style="width: 240px;">
+                        <a class="dropdown-item d-flex align-items-center justify-content-between px-2 py-3" href="{{ sub_category.slug }}">
                             <span>{{ sub_category.title }}</span>
                             <span><i class="fa fa-arrow-left"></i></span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" style="padding: 0;">
                             {% for sub_sub_category in sub_category.children.all %}
-                            <li><a class="dropdown-item py-2 px-3" href="{{ sub_sub_category.slug }}">{{ sub_sub_category.title }}</a></li>
+                            <li><a class="dropdown-item px-2 py-3" href="{{ sub_sub_category.slug }}">{{ sub_sub_category.title }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>

@@ -134,3 +134,9 @@
 .nav-link {
     padding: 20px 10px !important;
 }
+
+
+.my-custom-title {
+    font-size: 12pt;
+    font-weight: bold;
+}

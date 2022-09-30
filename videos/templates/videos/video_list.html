@@ -44,9 +44,9 @@
                             </a>
                         </div>
                         <a href="{{ video.get_absolute_url }}">
-                            <h5 class="video-card-title m-2">
-                                {{ video.get_description }}
-                            </h5>
+                            <h3 class="video-card-title m-2 my-custom-title">
+                                {{ video.title|truncatechars:40 }}
+                            </h3>
                         </a>
                         <div class="my-3 pb-3 mx-2">
                             <i class="fa fa-user  ml-1 "></i>
