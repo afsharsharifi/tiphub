@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "teachers.apps.TeachersConfig",
     "videos.apps.VideosConfig",
+    "notifications.apps.NotificationsConfig",
     # Installed Packages
     "django_cleanup.apps.CleanupConfig",
     "allauth",
