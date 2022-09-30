@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.github",
     "widget_tweaks",
     "ckeditor",
+    "django_render_partial",
 ]
 
 SITE_ID = 1

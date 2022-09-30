@@ -1,3 +1,4 @@
+{% load render_partial %}
 <html lang="en">
 
 <head>
@@ -11,7 +12,7 @@
 
 <body>
     {% include 'includes/header.html' %}
-    {% include 'includes/navbar.html' %}
+    {% render_partial 'home:navbar_partial_view' %}
     {% block content %}{% endblock %}
     {% include 'includes/footer.html' %}
     {% include 'includes/_footer_references.html' %}

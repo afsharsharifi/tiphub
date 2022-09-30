@@ -4,6 +4,15 @@ from videos.models import Video, Category
 from django.db.models import Q
 
 
+class NavbarPartialView(TemplateView):
+    template_name = "includes/navbar.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
+
+
 class HomePageView(TemplateView):
     template_name = "home/index.html"
 
@@ -11,7 +20,6 @@ class HomePageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['newest_videos'] = Video.objects.all().order_by('-published_at')[:5]
         context['top_videos'] = Video.objects.all().order_by('-viewers_by_ip')[:5]
-        context['categories'] = Category.objects.all()
         return context
 
 
